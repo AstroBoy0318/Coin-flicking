@@ -1,9 +1,6 @@
 let http = require('http');
-let bodyParser = require('body-parser');
 let express = require('express');
 let Web3 = require('web3');
-let Tx = require('ethereumjs-tx');
-var ethers = require('ethers');
 let Room = require('./room.js');
 
 let rooms = [];
@@ -17,14 +14,11 @@ const adminWallet = "0xE5F60C04a06ef06933B13D902A4c76580e1478Fa";
 const pvKey = "0x15914feeb00cf4be8022a0dd1558511bb0caac12ded8ce1331b534a2e1e52440";
 const chainID = 97;
 const rpcUrl = { 97: "https://data-seed-prebsc-1-s1.binance.org:8545", 56: "https://bsc-dataseed1.defibit.io" }
-const contractAddress = { 97: "0x2657B26E08d9964645576AB1E18858eF85cc1fdf", 56: "" };
-const abi = [{ "inputs": [], "stateMutability": "nonpayable", "type": "constructor" }, { "inputs": [], "name": "admin", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "number", "type": "uint256" }, { "internalType": "string", "name": "player", "type": "string" }, { "internalType": "string", "name": "playerID", "type": "string" }], "name": "bet", "outputs": [{ "internalType": "bool", "name": "success", "type": "bool" }], "stateMutability": "payable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "sender", "type": "address" }], "name": "changeAdmin", "outputs": [{ "internalType": "bool", "name": "success", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "a", "type": "string" }, { "internalType": "string", "name": "b", "type": "string" }], "name": "compareStrings", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "number", "type": "uint256" }, { "internalType": "string", "name": "winner", "type": "string" }], "name": "prize", "outputs": [{ "internalType": "bool", "name": "success", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "name": "rooms", "outputs": [{ "internalType": "string", "name": "playerIDA", "type": "string" }, { "internalType": "address", "name": "playerA", "type": "address" }, { "internalType": "uint256", "name": "betA", "type": "uint256" }, { "internalType": "string", "name": "playerIDB", "type": "string" }, { "internalType": "address", "name": "playerB", "type": "address" }, { "internalType": "uint256", "name": "betB", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "newRate", "type": "uint256" }], "name": "updateWinnerRate", "outputs": [{ "internalType": "bool", "name": "success", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "winnerRate", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "withdraw", "outputs": [{ "internalType": "bool", "name": "success", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }];
+const contractAddress = { 97: "0x0c3DADefe94e8e6D2512D1cF4c542402D837bD4e", 56: "" };
+const abi = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"admin","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"playerID","type":"string"}],"name":"bet","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"sender","type":"address"}],"name":"changeAdmin","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"a","type":"string"},{"internalType":"string","name":"b","type":"string"}],"name":"compareStrings","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"","type":"string"}],"name":"players","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"number","type":"uint256"},{"internalType":"uint256","name":"betAmount","type":"uint256"},{"internalType":"address","name":"winner","type":"address"}],"name":"prize","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"newRate","type":"uint256"}],"name":"updateWinnerRate","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"winnerRate","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"withdraw","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"}];
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl[chainID]));
+const contract = new web3.eth.Contract(abi, contractAddress[chainID]);
 
-const provider = new ethers.providers.Web3Provider(web3.currentProvider);
-const wallet = new ethers.Wallet(pvKey, provider);
-
-//socket
 // configure for react client
 /*
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -98,18 +92,25 @@ io.on('connection', function (socket) {
                 let playersLabel = ['A', 'B'];
                 let winnerIndex = getRandomInt(0, 2);
                 room.winner = playersLabel[winnerIndex];
+                let betAmount = parseFloat(room.betA) + parseFloat(room.betB);
 
                 //send reward
-                provider.getTransactionCount(wallet.address).then((transactionCountPromise) => {
-                    let overrides = {
-                        gasPrice: ethers.utils.parseUnits('50.0', 'gwei'),
-                        gasLimit: 120000,
-                        nonce: transactionCountPromise
-                    }                    
-                    let contract = new ethers.Contract(contractAddress[chainID], abi, wallet);
-                    let contractWithSigner = contract.connect(wallet);
-                    contractWithSigner.prize(room.number, room.winner, overrides).catch(function (e) { console.log(e); return null }).then((tx) => {
-                        console.log(tx);
+                contract.methods.players(socket.id).call().then((winnerAddress)=>{   
+                    const query = contract.methods.prize(room.number, Web3.utils.toWei(betAmount.toString()).toString(),winnerAddress);
+                    const encodedABI = query.encodeABI();
+                    web3.eth.accounts.signTransaction(
+                        {
+                            data: encodedABI,
+                            from: adminWallet,
+                            gas: 3000000,
+                            to: contract.options.address
+                        },
+                        pvKey
+                    ).then((signedTx) => {
+                        sendTransaction(signedTx);
+                        //web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+                    }).catch((err) => {
+                        console.log(err);
                     });
                 });
                 //end sending
@@ -142,6 +143,17 @@ io.on('connection', function (socket) {
             let resp = { action: 'join', player: sessionId, activeRoom: room };
             return resp;
         }
+    }
+
+    function sendTransaction(signedTx){        
+        const sentTx = web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+        sentTx.on("receipt", receipt => {
+            console.log("success");
+        });
+        sentTx.on("error", err => {
+            console.log("error");
+            sendTransaction(signedTx);
+        });
     }
 });
 server.listen(port, () => {
