@@ -9,7 +9,9 @@ $(function () {
     screens.forEach((el, idx) => {
         if (idx > 0)
             $("#" + el).hide();
-    })
+    });
+    $(".container").removeClass("d-none");
+    initWeb3();
 });
 function joinGame() {
     myName = $("#join-game input").val();
@@ -25,6 +27,34 @@ function joinGame() {
         }
         else if (messages.activeRoom && myRoom && messages.activeRoom.number == myRoom.number) {
             setPlayerStatus(messages.activeRoom);
+            if(messages.action == 'started')
+            {
+                alert("Game started");
+                setTimeout(function(){
+                    let winnerName = myRoom.winner;
+                    let winnerID;
+                    if(winnerName == 'A')
+                    {
+                        winnerName = myRoom.playerA;
+                        winnerID = myRoom.playerIDA;
+                    }
+                    else if(winnerName == 'B')
+                    {
+                        winnerName = myRoom.playerB;
+                        winnerID = myRoom.playerIDB;
+                    };
+                    let msg = " the winner. The winner will get "+(parseFloat(myRoom.betA)+parseFloat(myRoom.betB))*0.95+"BNB as reward soon.";
+                    if(winnerID == socket.id)
+                    {
+                        msg = "You are"+msg;
+                    }
+                    else
+                    {
+                        msg = winnerName+" is"+msg;
+                    }
+                    alert(msg);
+                }, 1000);
+            }
         }
         else {
             rooms = messages.rooms;
@@ -84,6 +114,7 @@ function joinRoom(number) {
 
 function setPlayerStatus(room) {
     myRoom = room;
+    $("#play-side .card-title").html("Room "+room.number);
     if (room.playerIDA == socket.id) {
         setMyStatus(playerASelect, room.sideA, room.betA, room.readyA, room.playerB);
         setOtherStatus(room.playerB, playerBSelect, room.sideB, room.betB, room.readyB);
@@ -125,6 +156,29 @@ function bet() {
 }
 
 function getReady() {
-    $("#ready-button").prop("disabled",true);;
-    socket.emit("roomAction", { action: "ready", number: myRoom.number });
+    //$("#ready-button").prop("disabled",true);
+    $("button").prop("disabled",true);
+    let player, amount;
+    if(myRoom.playerIDA == socket.id)
+    {
+        player = 'A';
+        amount = myRoom.betA;
+    }
+    else if(myRoom.playerIDB == socket.id)
+    {
+        player = 'B';
+        amount = myRoom.betB;
+    }
+    ready(myRoom.number, player,socket.id, amount).then((re)=>{
+        if(re && re.status)
+        {
+            socket.emit("roomAction", { action: "ready", number: myRoom.number });
+        }
+        else
+        {
+            $("button").prop("disabled",false);
+        }
+    }).catch(function (err) {
+        $("button").prop("disabled",false);
+    });;
 }
