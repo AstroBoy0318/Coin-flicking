@@ -1,2 +1,34 @@
+
+@font-face {
+    font-family: "Debug";
+    src: url(fonts/DebugFreeTrial.otf);
+} 
 body{
+    font-family: Debug;
+    background-image: url(../images/back.jpg);
+    background-size: cover;
+    background-position: center;
+}
+body *{
+    font-family: inherit;
+}
+.card{    
+    background-image: url(../images/card-back.png);
+    background-size: 100% 100%;
+    border: none;
+    background-color: transparent;
+}
+.btn{
+    padding: 0 1em;
+    background-image: url(../images/button-back.png);
+    background-size: 100% 100%;
+    border: none;
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+.btn:hover,.btn:focus,.btn:active{    
+    border: none;
+    outline: none;
+    background-color: transparent;
+    transform: scale(1.1);
 }

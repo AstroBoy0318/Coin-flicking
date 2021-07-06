@@ -138,7 +138,7 @@ function setMyStatus(select, side, bet, ready, otherPlayer) {
 
 function setOtherStatus(player, select, side, bet, ready) {
     let pan = $("#other-side");
-    $(".card-title", pan).html("Other player : " + player);
+    $(".card-title", pan).html("Other player "+player);
     $("select", pan).html(select);
     $("select", pan).val(side);
     $("input", pan).val(bet);

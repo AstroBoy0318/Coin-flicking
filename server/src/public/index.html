@@ -11,49 +11,49 @@
 <body>
     <div class="container d-none">
 
-        <div class="row" id="join-game">
-            <div class="col-sm-2"></div>
-            <div class="col-sm-8 g-4">
+        <div class="row mt-5" id="join-game">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4 g-4">
                 <div class="card text-center">
                     <div class="card-body">
-                        <h5 class="card-title">
+                        <h5 class="card-title p-4 fs-2">
                             Join Game
                         </h5>
                         <div class="mb-3">
                             <input class="form-control form-control-lg" type="text" placeholder="Input your name"
                                 aria-label="Input your name">
                         </div>
-                        <button class="btn btn-primary" onclick="joinGame()">Join</button>
+                        <button class="btn btn-primary fs-2 m-4" onclick="joinGame()">Join</button>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-2"></div>
+            <div class="col-sm-4"></div>
         </div>
 
         <div class="row" id="join-room">
-            <div class="col-sm-2"></div>
-            <div class="col-sm-8 g-4">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4 g-4">
                 <div class="card text-center">
                     <div class="card-body">
-                        <h5 class="card-title">
+                        <h5 class="card-title fs-2">
                             Room List
                         </h5>
                         <div class="mb-3">
                             <div class="list-group">
                             </div>
                         </div>
-                        <button class="btn btn-primary" onclick="createRoom()">Create a room</button>
+                        <button class="btn btn-primary fs-2 m-4" onclick="createRoom()">Create a room</button>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-2"></div>
+            <div class="col-sm-4"></div>
         </div>
 
         <div class="row" id="game-play">
             <div class="col-sm-4 g-4" id="my-side">
                 <div class="card text-center">
                     <div class="card-body">
-                        <h5 class="card-title">
+                        <h5 class="card-title fs-2">
                             Me
                         </h5>
                         <div class="mb-3">
@@ -61,9 +61,9 @@
                             </select>
                             <input class="form-control mb-4" type="text" placeholder="Input your amount"
                                 aria-label="Input your amount">                            
-                            <button id="bet-button" class="btn btn-success mb-4" onclick="bet()">Bet</button>
+                            <button id="bet-button" class="btn btn-success fs-2 mb-4" onclick="bet()">Bet</button>
                         </div>
-                        <button id="ready-button" class="btn btn-primary" onclick="getReady()">Ready</button>
+                        <button id="ready-button" class="btn btn-primary fs-2 mb-2" onclick="getReady()">Ready</button>
                     </div>
                 </div>
             </div>
@@ -80,8 +80,8 @@
             <div class="col-sm-4 g-4" id="other-side">
                 <div class="card text-center">
                     <div class="card-body">
-                        <h5 class="card-title">
-                            Other player:
+                        <h5 class="card-title fs-2">
+                            Other player
                         </h5>
                         <div class="mb-3">
                             <select class="form-select mb-4" disabled>
@@ -89,7 +89,7 @@
                             <input class="form-control mb-4" type="text" placeholder="Input your amount"
                                 aria-label="Input your amount" readonly>                   
                         </div>
-                        <button class="btn btn-primary" disabled>Not ready</button>
+                        <button class="btn btn-primary fs-2 mb-4" disabled>Not ready</button>
                     </div>
                 </div>
             </div>
