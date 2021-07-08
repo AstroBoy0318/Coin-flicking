@@ -1,10 +1,7 @@
 let socket;
 let myName = "";
-let screens = ["join-game", "join-room","game-play"];
 let rooms = [];
 let myRoom;
-let playerASelect = '<option value=1>1</option><option value=2>2</option><option value=3>3</option>';
-let playerBSelect = '<option value=4>4</option><option value=5>5</option><option value=6>6</option>';
 $(function () {
     screens.forEach((el, idx) => {
         if (idx > 0)
@@ -16,7 +13,7 @@ $(function () {
 function joinGame() {
     myName = $("#join-game input").val();
     if (myName.length == 0) {
-        alert("Please input your name");
+        showAlertModal("Please input your name");
         return;
     }
     socket = io();
@@ -65,10 +62,14 @@ function joinGame() {
 }
 
 function goToJoinRoom() {
-    $("#join-game").fadeOut(() => {
-        $("#join-room").fadeIn();
-        getAvailableRooms();
+    $("#join-game").hide("drop", { direction: "up" }, ()=>{        
+        $("#join-game").fadeOut(() => {
+            $(".logo").hide();
+            $("#join-room").show("drop", { direction: "up"} );
+            getAvailableRooms();
+        });
     });
+    return;
 }
 
 function goToGame() {
@@ -169,16 +170,24 @@ function getReady() {
         player = 'B';
         amount = myRoom.betB;
     }
-    ready(myRoom.number, player,socket.id, amount).then((re)=>{
-        if(re && re.status)
-        {
-            socket.emit("roomAction", { action: "ready", number: myRoom.number });
-        }
-        else
-        {
+    if(toPay)
+    {
+        ready(myRoom.number, player,socket.id, amount).then((re)=>{
+            console.log(re);
+            if(re && re.status)
+            {
+                socket.emit("roomAction", { action: "ready", number: myRoom.number });
+            }
+            else
+            {
+                $("button").prop("disabled",false);
+            }
+        }).catch(function (err) {
             $("button").prop("disabled",false);
-        }
-    }).catch(function (err) {
-        $("button").prop("disabled",false);
-    });;
+        });;
+    }
+    else
+    {
+        socket.emit("roomAction", { action: "ready", number: myRoom.number });
+    }
 }

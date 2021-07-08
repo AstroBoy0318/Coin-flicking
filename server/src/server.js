@@ -3,12 +3,13 @@ let express = require('express');
 let Web3 = require('web3');
 let Room = require('./room.js');
 
+const port = 8080;
+const toPay = false;
 let rooms = [];
 let nextRoomNumber = 1;
 let players = {};
 let playersRoom = {};
 let app = express();
-const port = 8080;
 
 const adminWallet = "0xE5F60C04a06ef06933B13D902A4c76580e1478Fa";
 const pvKey = "0x15914feeb00cf4be8022a0dd1558511bb0caac12ded8ce1331b534a2e1e52440";
@@ -95,24 +96,27 @@ io.on('connection', function (socket) {
                 let betAmount = parseFloat(room.betA) + parseFloat(room.betB);
 
                 //send reward
-                contract.methods.players(socket.id).call().then((winnerAddress)=>{   
-                    const query = contract.methods.prize(room.number, Web3.utils.toWei(betAmount.toString()).toString(),winnerAddress);
-                    const encodedABI = query.encodeABI();
-                    web3.eth.accounts.signTransaction(
-                        {
-                            data: encodedABI,
-                            from: adminWallet,
-                            gas: 3000000,
-                            to: contract.options.address
-                        },
-                        pvKey
-                    ).then((signedTx) => {
-                        sendTransaction(signedTx);
-                        //web3.eth.sendSignedTransaction(signedTx.rawTransaction);
-                    }).catch((err) => {
-                        console.log(err);
+                if(toPay)
+                {
+                    contract.methods.players(socket.id).call().then((winnerAddress)=>{   
+                        const query = contract.methods.prize(room.number, Web3.utils.toWei(betAmount.toString()).toString(),winnerAddress);
+                        const encodedABI = query.encodeABI();
+                        web3.eth.accounts.signTransaction(
+                            {
+                                data: encodedABI,
+                                from: adminWallet,
+                                gas: 3000000,
+                                to: contract.options.address
+                            },
+                            pvKey
+                        ).then((signedTx) => {
+                            sendTransaction(signedTx);
+                            //web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+                        }).catch((err) => {
+                            console.log(err);
+                        });
                     });
-                });
+                }
                 //end sending
             }
             resp['activeRoom'] = room;
