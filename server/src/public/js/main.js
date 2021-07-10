@@ -2,12 +2,17 @@ let socket;
 let myName = "";
 let rooms = [];
 let myRoom;
+let myAvatar=0, myAmount, otherAvatar=0;
 $(function () {
+    $(".btn-back").hide();
     screens.forEach((el, idx) => {
         if (idx > 0)
             $("#" + el).hide();
     });
     $(".container").removeClass("d-none");
+    $("#my-side .bet-amount").on('change',function(){
+        myAmount = parseInt($(this).val());
+    });
     initWeb3();
 });
 function joinGame() {
@@ -24,30 +29,25 @@ function joinGame() {
         }
         else if (messages.activeRoom && myRoom && messages.activeRoom.number == myRoom.number) {
             setPlayerStatus(messages.activeRoom);
-            if(messages.action == 'started')
-            {
+            if (messages.action == 'started') {
                 alert("Game started");
-                setTimeout(function(){
+                setTimeout(function () {
                     let winnerName = myRoom.winner;
                     let winnerID;
-                    if(winnerName == 'A')
-                    {
+                    if (winnerName == 'A') {
                         winnerName = myRoom.playerA;
                         winnerID = myRoom.playerIDA;
                     }
-                    else if(winnerName == 'B')
-                    {
+                    else if (winnerName == 'B') {
                         winnerName = myRoom.playerB;
                         winnerID = myRoom.playerIDB;
                     };
-                    let msg = " the winner. The winner will get "+(parseFloat(myRoom.betA)+parseFloat(myRoom.betB))*0.95+"BNB as reward soon.";
-                    if(winnerID == socket.id)
-                    {
-                        msg = "You are"+msg;
+                    let msg = " the winner. The winner will get " + (parseFloat(myRoom.betA) + parseFloat(myRoom.betB)) * 0.95 + "BNB as reward soon.";
+                    if (winnerID == socket.id) {
+                        msg = "You are" + msg;
                     }
-                    else
-                    {
-                        msg = winnerName+" is"+msg;
+                    else {
+                        msg = winnerName + " is" + msg;
                     }
                     alert(msg);
                 }, 1000);
@@ -62,20 +62,45 @@ function joinGame() {
 }
 
 function goToJoinRoom() {
-    $("#join-game").hide("drop", { direction: "up" }, ()=>{        
-        $("#join-game").fadeOut(() => {
-            $(".logo").hide();
-            $("#join-room").show("drop", { direction: "up"} );
-            getAvailableRooms();
+    $("#join-game").hide("drop", { direction: "up" }, () => {
+        $(".logo").hide();
+        $("#join-room").show("drop", { direction: "up" }, ()=>{
+            $(".btn-back").show();
+            $(".btn-back").off('click');
+            $(".btn-back").on('click',()=>{
+                location.reload();
+            });
         });
+        getAvailableRooms();
     });
     return;
 }
 
 function goToGame() {
-    $("#join-room").fadeOut(() => {
-        $("#game-play").fadeIn();
+    $("#join-room").hide("drop", { direction: "up" }, () => {
+        $("#game-play").show("drop", { direction: "up" }, ()=>{
+            $(".btn-back").off('click');
+            $(".btn-back").on('click',()=>{
+                backToJoinRoom();
+            });
+        });
     });
+}
+
+function backToJoinRoom() {
+    exitRoom();
+    $("#game-play").hide("drop", { direction: "up" }, () => {
+        $(".logo").hide();
+        $("#join-room").show("drop", { direction: "up" }, ()=>{
+            $(".btn-back").show();
+            $(".btn-back").off('click');
+            $(".btn-back").on('click',()=>{
+                location.reload();
+            });
+        });
+        getAvailableRooms();
+    });
+    return;
 }
 
 function getAvailableRooms() {
@@ -99,10 +124,12 @@ function drawRoomList() {
             let playerCount = 0;
             if (room.playerA != "" || room.playerB != "")
                 playerCount = 1;
-            roomsHtml += '<a href="javascript:joinRoom(' + room.number + ')" class="list-group-item list-group-item-action list-group-item-primary">Room ' + room.number + (playerCount == 0 ? ' No player' : ' One player') + '</a>';
+            roomsHtml += '<a href="javascript:joinRoom(' + room.number + ')" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Click to Join" class="list-group-item list-group-item-action list-group-item-primary room-item"><div class="room-user ' + (playerCount == 0 ? 'nouser"' : 'user" data-bs-toggle="tooltip" data-bs-placement="right" title="'+(room.playerA?room.playerA:room.playerB)+'"') + '"></div> Room ' + room.number + '</a>';
         });
     }
     $("#join-room .list-group").html(roomsHtml);
+
+    initTooltip();
 }
 
 function createRoom() {
@@ -113,81 +140,98 @@ function joinRoom(number) {
     socket.emit("roomAction", { action: 'join', roomNumber: number, playerName: myName });
 }
 
+function exitRoom()
+{
+    socket.emit("roomAction", { action: 'exit' });
+}
+
 function setPlayerStatus(room) {
     myRoom = room;
-    $("#play-side .card-title").html("Room "+room.number);
+    $("#play-side .card-title").html("Room " + room.number);
     if (room.playerIDA == socket.id) {
-        setMyStatus(playerASelect, room.sideA, room.betA, room.readyA, room.playerB);
-        setOtherStatus(room.playerB, playerBSelect, room.sideB, room.betB, room.readyB);
+        setMyStatus(playerSelect, room.readyA, room.playerB);
+        setOtherStatus(room.playerB, room.sideB, room.betB, room.readyB);
     }
     else if (room.playerIDB == socket.id) {
-        setMyStatus(playerBSelect, room.sideB, room.betB, room.readyB, room.playerA);
-        setOtherStatus(room.playerA, playerASelect, room.sideA, room.betA, room.readyA);
+        setMyStatus(playerSelect, room.readyB, room.playerA);
+        setOtherStatus(room.playerA, room.sideA, room.betA, room.readyA);
     }
 }
 
-function setMyStatus(select, side, bet, ready, otherPlayer) {
+function setMyStatus(select, ready, otherPlayer) {
     let pan = $("#my-side");
-    $("select", pan).html(select);
-    $("select", pan).val(side);
-    $("input", pan).val(bet);
+    // $("input", pan).val(bet);
     if (ready || otherPlayer == "")
-        $("button", pan).prop("disabled",true);
+        $("button", pan).prop("disabled", true);
     else
-        $("button", pan).prop("disabled",false);
+        $("button", pan).prop("disabled", false);
+    
+    // $("#my-side .bet-amount").val(myAmount);
+    $("#my-side .avatar-div *").remove();
+    $("#my-side .avatar-div").append(getAvatar(myAvatar)).on('click',function(){
+        showAvatarModal();
+    });
 }
 
-function setOtherStatus(player, select, side, bet, ready) {
+function setOtherStatus(player, side, bet, ready) {
     let pan = $("#other-side");
-    $(".card-title", pan).html("Other player "+player);
-    $("select", pan).html(select);
-    $("select", pan).val(side);
+    $(".card-title", pan).html(player == ""?"?":player);
+    alert(side);
+    otherAvatar = side == null?0:side;
     $("input", pan).val(bet);
     if (ready)
-        $("button",pan).html("Ready");
+        $("button", pan).html("Ready");
     else
-        $("button",pan).html("Not ready");
+        $("button", pan).html("Not ready");
+    $("#other-side .avatar-div *").remove();
+    $("#other-side .avatar-div").append(getAvatar(otherAvatar, true));
 }
 
 function bet() {
     let pan = $("#my-side");
-    let side = $("select", pan).val();
+    let side = myAvatar;
     let bet = $("input", pan).val();
     socket.emit("roomAction", { action: "bet", number: myRoom.number, side: side, bet: bet });
 }
 
 function getReady() {
     //$("#ready-button").prop("disabled",true);
-    $("button").prop("disabled",true);
+    $("button").prop("disabled", true);
     let player, amount;
-    if(myRoom.playerIDA == socket.id)
-    {
+    if (myRoom.playerIDA == socket.id) {
         player = 'A';
         amount = myRoom.betA;
     }
-    else if(myRoom.playerIDB == socket.id)
-    {
+    else if (myRoom.playerIDB == socket.id) {
         player = 'B';
         amount = myRoom.betB;
     }
-    if(toPay)
-    {
-        ready(myRoom.number, player,socket.id, amount).then((re)=>{
+    if (toPay) {
+        ready(myRoom.number, player, socket.id, amount).then((re) => {
             console.log(re);
-            if(re && re.status)
-            {
+            if (re && re.status) {
                 socket.emit("roomAction", { action: "ready", number: myRoom.number });
             }
-            else
-            {
-                $("button").prop("disabled",false);
+            else {
+                $("button").prop("disabled", false);
             }
         }).catch(function (err) {
-            $("button").prop("disabled",false);
+            $("button").prop("disabled", false);
         });;
     }
-    else
-    {
+    else {
         socket.emit("roomAction", { action: "ready", number: myRoom.number });
     }
+}
+
+function initTooltip() {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
+}
+
+function getAvatar(number, disabled)
+{
+    return "<div number="+number+" class='avatar avatar-"+number+"' "+(disabled?"disabled":"")+"></div>";
 }

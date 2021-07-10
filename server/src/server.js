@@ -42,11 +42,7 @@ io.on('connection', function (socket) {
         console.log('Got disconnect! Id: ' + socket.id);
         let room = rooms[playersRoom[sessionId] - 1];
         if (typeof room !== "undefined") {
-            if (room.playerIDA == sessionId)
-                room.exitPlayerA();
-            else if (room.playerIDB == sessionId)
-                room.exitPlayerB();
-
+            exitRoom(room);
             let resp = {};
             let availableRooms = getAvailableRooms();
             resp['rooms'] = availableRooms;
@@ -54,7 +50,6 @@ io.on('connection', function (socket) {
             io.emit('updateRooms', resp);
         }
         delete players[sessionId];
-        delete playersRoom[sessionId];
     });
 
     socket.on('roomAction', function (message) {
@@ -67,6 +62,9 @@ io.on('connection', function (socket) {
         }
         else if (message.action == 'join') {
             resp = joinRoom(message);
+        }
+        else if (message.action == 'exit') {
+            resp = exitRoom();
         }
         else if (message.action == "bet") {
             resp['action'] = "update";
@@ -147,6 +145,18 @@ io.on('connection', function (socket) {
             let resp = { action: 'join', player: sessionId, activeRoom: room };
             return resp;
         }
+    }
+
+    function exitRoom()
+    {        
+        let room = rooms[playersRoom[sessionId] - 1];
+        if (room.playerIDA == sessionId)
+            room.exitPlayerA();
+        else if (room.playerIDB == sessionId)
+            room.exitPlayerB();
+        delete playersRoom[sessionId];
+        let resp = { action: 'exit', player: sessionId, activeRoom: room };
+        return resp;
     }
 
     function sendTransaction(signedTx){        

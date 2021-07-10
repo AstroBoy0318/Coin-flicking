@@ -19,6 +19,21 @@ body{
 }
 body *{
     font-family: inherit;
+    text-transform: uppercase;
+}
+::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(182, 86, 3,0.3); 
+    border-radius: 10px;
+}
+ 
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: linear-gradient(to right, #e3aa0e, #161616,#e3aa0e);
+    -webkit-box-shadow: inset 0 0 6px rgba(182, 86, 3,0.5); 
 }
 body .bg-image{
     position: fixed;
@@ -32,6 +47,9 @@ body .bg-image{
     background-size: cover;
     background-position: center;
     opacity: 0.8;
+}
+body .container{
+    position: relative;
 }
 .logo{
     max-width: 150px;
@@ -63,14 +81,142 @@ body .bg-image{
 #join-room{
     line-height: 1;
 }
+#join-room .list-group{
+    height: 315px;
+}
+#join-room .list-group .room-item{
+    text-align: left;
+    text-indent: 60px;
+    border: 1px solid #e3aa0e;
+    background: transparent;
+    color: white;
+}
+#join-room .list-group .room-item:hover{
+    filter: brightness(120%);
+}
+#join-room .list-group .room-item .room-user{
+    height: 46px;
+    width: 50px;
+    position: absolute;
+    left: 3%;
+    bottom: 1px;
+    background-size: 100% 100%;
+}
+#join-room .list-group .room-item .nouser{
+    background-image: url(../images/room-nouser.png);
+}
+#join-room .list-group .room-item .user{
+    background-image: url(../images/room-user.png);
+}
+#game-play .card{
+    background-image: url(../images/game-play-card.png);
+}
+#game-play .card .card-title{
+    background-image: url(../images/player-name.png);
+    color: white;
+    background-size: 100% 100%;
+}
+#game-play .card .btn-success{
+    background-image: url(../images/bet-button.png);
+    line-height: 1;
+} 
+#play-side .card{
+    background-image: url(../images/room-name.png);
+}
+#game-play .avatar{
+    width: 120px;
+    height: 80px;
+    margin: 0 auto;
+    background-size: 100% 100%, auto 70%;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+#game-play .avatar[disabled]{
+    filter: brightness(70%);
+    cursor: not-allowed;
+}
+#game-play .avatar-0{
+    background-image: url(../images/avatar-back.png), url(../images/avatars/0.png);
+}
+#game-play .avatar-1{
+    background-image: url(../images/avatar-back.png), url(../images/avatars/1.png);
+}
+#game-play .avatar-2{
+    background-image: url(../images/avatar-back.png), url(../images/avatars/2.png);
+}
+#game-play .avatar-3{
+    background-image: url(../images/avatar-back.png), url(../images/avatars/3.png);
+}
+#game-play .avatar-4{
+    background-image: url(../images/avatar-back.png), url(../images/avatars/4.png);
+}
+#game-play .avatar-5{
+    background-image: url(../images/avatar-back.png), url(../images/avatars/5.png);
+}
+#game-play .avatar-6{
+    background-image: url(../images/avatar-back.png), url(../images/avatars/6.png);
+}
+#game-play .avatar-7{
+    background-image: url(../images/avatar-back.png), url(../images/avatars/7.png);
+}
+#game-play .avatar-8{
+    background-image: url(../images/avatar-back.png), url(../images/avatars/8.png);
+}
+#game-play .avatar-9{
+    background-image: url(../images/avatar-back.png), url(../images/avatars/9.png);
+}
+#game-play .avatar-10{
+    background-image: url(../images/avatar-back.png), url(../images/avatars/10.png);
+}
+#game-play .avatar-11{
+    background-image: url(../images/avatar-back.png), url(../images/avatars/11.png);
+}
+#game-play .avatar-12{
+    background-image: url(../images/avatar-back.png), url(../images/avatars/12.png);
+}
+#game-play .avatar-13{
+    background-image: url(../images/avatar-back.png), url(../images/avatars/13.png);
+}
+#game-play .avatar-14{
+    background-image: url(../images/avatar-back.png), url(../images/avatars/14.png);
+}
+#game-play .avatar-15{
+    background-image: url(../images/avatar-back.png), url(../images/avatars/15.png);
+}
+#game-play .avatar-16{
+    background-image: url(../images/avatar-back.png), url(../images/avatars/16.png);
+}
+#game-play .avatar-17{
+    background-image: url(../images/avatar-back.png), url(../images/avatars/17.png);
+}
+#game-play .avatar-18{
+    background-image: url(../images/avatar-back.png), url(../images/avatars/18.png);
+}
+#game-play .avatar-19{
+    background-image: url(../images/avatar-back.png), url(../images/avatars/19.png);
+}
+#game-play .avatar-20{
+    background-image: url(../images/avatar-back.png), url(../images/avatars/20.png);
+}
+#game-play .avatar-21{
+    background-image: url(../images/avatar-back.png), url(../images/avatars/21.png);
+}
+#game-play .avatar-22{
+    background-image: url(../images/avatar-back.png), url(../images/avatars/22.png);
+}
+#game-play .avatar-23{
+    background-image: url(../images/avatar-back.png), url(../images/avatars/23.png);
+}
+#game-play .avatar-24{
+    background-image: url(../images/avatar-back.png), url(../images/avatars/24.png);
+}
 .card{    
     background-size: 100% 100%;
     border: none;
     background-color: transparent;
 }
-.btn{
-    padding: 0 1em;
-    background-image: url(../images/button-back.png);
+.btn{    
     background-size: 100% 100%;
     border: none;
     background-color: transparent !important;
@@ -81,4 +227,16 @@ body .bg-image{
     outline: none;
     background-color: transparent;
     transform: scale(1.1);
+}
+.btn-back{
+    background-image: url(../images/back-button.png);
+    width: 40px;
+    height: 30px;
+    position: absolute;
+    right: 5%;
+    top: 5%;
+}
+.btn-primary{
+    padding: 0 1em;
+    background-image: url(../images/normal-button.png);
 }
