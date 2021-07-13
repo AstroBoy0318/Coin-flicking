@@ -55,16 +55,36 @@ io.on('connection', function (socket) {
     socket.on('roomAction', function (message) {
         let resp = {};
         if (message.action == 'create') {
-            let room = new Room(nextRoomNumber);
-            rooms.push(room);
-            nextRoomNumber++;
-            resp['action'] = 'create';
+            let room = null;
+            for(let i = 0; i < rooms.length; i++)
+            {
+                if(rooms[i].isFree())
+                {
+                    room = rooms[i];
+                    break;
+                }
+            }
+            if(room == null)
+            {
+                message.roomNumber = nextRoomNumber;
+                room = new Room(nextRoomNumber,message.roomName);
+                rooms.push(room);
+                nextRoomNumber++;
+            }
+            else
+            {
+                room.name = message.roomName;
+                message.roomNumber = room.number;
+            }
+            // resp['action'] = 'create';
+            resp = joinRoom(message);
         }
         else if (message.action == 'join') {
             resp = joinRoom(message);
         }
         else if (message.action == 'exit') {
             resp = exitRoom();
+            resp['action'] = "update";
         }
         else if (message.action == "bet") {
             resp['action'] = "update";
@@ -92,7 +112,6 @@ io.on('connection', function (socket) {
                 let winnerIndex = getRandomInt(0, 2);
                 room.winner = playersLabel[winnerIndex];
                 let betAmount = parseFloat(room.betA) + parseFloat(room.betB);
-
                 //send reward
                 if(toPay)
                 {
@@ -108,13 +127,25 @@ io.on('connection', function (socket) {
                             },
                             pvKey
                         ).then((signedTx) => {
-                            sendTransaction(signedTx);
+                            sendTransaction(signedTx, room);
+                            room.exitPlayerA();
+                            room.exitPlayerB();
                             //web3.eth.sendSignedTransaction(signedTx.rawTransaction);
                         }).catch((err) => {
                             console.log(err);
                         });
                     });
                 }
+                else
+                {
+                    setTimeout(()=>{
+                        room.exitPlayerA();
+                        room.exitPlayerB();
+                    }, 1000);
+                }
+                //delete room info 
+                delete playersRoom[room.playerIDA];
+                delete playersRoom[room.playerIDB];
                 //end sending
             }
             resp['activeRoom'] = room;
@@ -132,7 +163,8 @@ io.on('connection', function (socket) {
         players[sessionId] = message.playerName;
         let roomNumber = message.roomNumber;
         let room = rooms[roomNumber - 1];
-        if (room.isAvailable()) {
+        let resp = { action: 'join', player: sessionId };
+        if (room.isAvailable() || room.isFree()) {
             if (room.playerA == "") {
                 room.playerA = message.playerName;
                 room.playerIDA = sessionId;
@@ -142,9 +174,9 @@ io.on('connection', function (socket) {
                 room.playerIDB = sessionId;
             }
             playersRoom[sessionId] = roomNumber;
-            let resp = { action: 'join', player: sessionId, activeRoom: room };
-            return resp;
+            resp['activeRoom'] = room;
         }
+        return resp;
     }
 
     function exitRoom()
@@ -159,10 +191,15 @@ io.on('connection', function (socket) {
         return resp;
     }
 
-    function sendTransaction(signedTx){        
+    function sendTransaction(signedTx, room){        
         const sentTx = web3.eth.sendSignedTransaction(signedTx.rawTransaction);
         sentTx.on("receipt", receipt => {
             console.log("success");
+            if(room != null)
+            {
+                room.exitPlayerA();
+                room.exitPlayerB();
+            }
         });
         sentTx.on("error", err => {
             console.log("error");
@@ -193,7 +230,6 @@ function getAvailableRooms() {
     });
     return availableRooms;
 }
-
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);

@@ -1,7 +1,8 @@
 class Room{
-    constructor(number)
+    constructor(number,name)
     {
         this.number = number;
+        this.name = name;
 
         this.playerA = "";
         this.playerB = "";
@@ -27,7 +28,12 @@ class Room{
     }
     isAvailable()
     {
-        return this.playerA == "" || this.playerB == "";
+        // return this.name != "";
+        return (this.playerA == "" && this.playerB != "") || (this.playerA != "" && this.playerB == "");
+    }
+    isFree()
+    {
+        return this.playerA == "" && this.playerB == "";
     }
     playerABet(bet,side)
     {
@@ -57,6 +63,8 @@ class Room{
         this.scoreA = 0;
         this.winner = "";
         this.nowPlaying = false;
+        if(this.playerB == "")
+            this.name = "";
     }
     exitPlayerB()
     {
@@ -68,6 +76,8 @@ class Room{
         this.scoreB = 0;
         this.winner = "";
         this.nowPlaying = false;
+        if(this.playerA == "")
+            this.name = "";
     }
 }
 

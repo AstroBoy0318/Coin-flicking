@@ -65,12 +65,12 @@
                             Me
                         </div>
                         <div class="mb-1 w-75 mx-auto">
-                            <div class="mb-4 text-center avatar-div">
+                            <div class="mb-4 text-center avatar-div" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Click to change Avatar.">
 
                             </div>
                             <input class="form-control mb-4 bet-amount" type="number" placeholder="Input your amount"
                                 aria-label="Input your amount">
-                            <button id="bet-button" class="btn btn-success fs-2 mb-4" onclick="bet()">Bet</button>
+                            <button id="bet-button" class="btn btn-success fs-2 mb-4" onclick="doBet()">Bet</button>
                         </div>
                         <button id="ready-button" class="btn btn-primary fs-2 mb-4" onclick="getReady()">Ready</button>
                     </div>
@@ -79,10 +79,16 @@
             <div class="col-sm-4 g-4" id="play-side">
                 <div class="card text-center">
                     <div class="card-body">
-                        <div class="card-title fs-1 pt-3">
+                        <div class="card-title fs-1 pt-4 pb-1 lh-1">
                         </div>
                         <div class="card-text">
                         </div>
+                    </div>
+                </div>
+                <div class="coin-area">
+                    <div class="coin">
+                        <div class="front-side"></div>
+                        <div class="back-side"></div>
                     </div>
                 </div>
             </div>
@@ -104,9 +110,27 @@
                 </div>
             </div>
         </div>
+
+        <div class="row" id="game-result">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 g-1">
+                <div class="card text-center mx-auto">
+                    <div class="card-body pt-5">
+                        <div class="reward-info fs-1">
+                            <p>The reward is</p>
+                            <p>BNB</p>
+                        </div>
+                        <div class="mt-5">
+                            <button class="btn btn-primary" id="home-button"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
     </div>
     <div class="modals w-0 h-0">
-        <div class="modal reload-modal lh-1" tabindex="-1">
+        <div id="reload-modal" class="modal lh-1" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -122,7 +146,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal alert-modal lh-1" tabindex="-1">
+        <div id="alert-modal" class="modal lh-1" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -138,6 +162,73 @@
                 </div>
             </div>
         </div>
+        <div id="avatar-modal" class="modal lh-1" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title fs-2">Select Your Avatar</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body fs-3">
+                        <div class="avatars">
+                            <div class="d-flex mb-2">
+                            </div>
+                            <div class="d-flex mb-2">
+                            </div>
+                            <div class="d-flex mb-2">
+                            </div>
+                            <div class="d-flex mb-2">
+                            </div>
+                            <div class="d-flex mb-2">
+                            </div>
+                            <div class="d-flex">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary fs-3" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="create-room-modal" class="modal lh-1" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title fs-2">Input Room Name</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input id="room-name-input" class="form-control form-control-lg" type="text" placeholder="Input Room Name">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary fs-3">Ok</button>
+                        <button type="button" class="btn btn-warning fs-3" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="go-text" class="d-none">
+        <div class="d-flex justify-content-around">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div>g</div>
+            <div>o</div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <div id="winner-show" class="d-none">
+        <div class="dog">
+            <div class="avatar">
+
+            </div>
+        </div>
     </div>
 </body>
 <script src="/socket.io/socket.io.min.js"></script>
@@ -148,7 +239,9 @@
     crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
 <script src="js/config.js"></script>
+<script src="js/utils.js"></script>
 <script src="js/modals.js"></script>
+<script src="js/coin.js"></script>
 <script src="js/web3.js"></script>
 <script src="js/main.js"></script>
 
