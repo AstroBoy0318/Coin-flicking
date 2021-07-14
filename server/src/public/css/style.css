@@ -52,6 +52,7 @@ body .bg-image{
 }
 body .container{
     position: relative;
+    z-index: 1;
 }
 .logo{
     max-width: 150px;
@@ -432,6 +433,7 @@ body .container{
     height: 100%;
     background: rgba(0,0,0,0.3);
     cursor: pointer;
+    z-index: 1;
 }
 
 #winner-show .dog{
@@ -476,4 +478,11 @@ body .container{
 }
 #game-result #home-button{
     background-image: url(../images/home-button.png);
+}
+#fireworks{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
 }

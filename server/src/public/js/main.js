@@ -19,6 +19,13 @@ $(function () {
     $("#winner-show").on('click',()=>{
         goToGameResult();
     });
+    $('#fireworks').hide();
+    $('#fireworks').fireworks({
+        sound: true,
+        opacity: 0.8,
+        width: '100%',
+        height: '100%'
+    });
 });
 function joinGame() {
     myName = $("#join-game input").val();
@@ -154,6 +161,11 @@ function goToGameResult()
             location.reload();
         });
         $("#game-result").show("drop",{ direction:"up" });
+        
+        if(!$("#game-result").find(".card").hasClass("failed"))
+        {
+            $('#fireworks').show();
+        }
     });
 }
 
@@ -168,6 +180,7 @@ function backToJoinRoomFromResult() {
             });
             myRoom = null;
             $("button", $("#my-side")).prop("disabled", false);
+            $("#fireworks").hide();
         });
         getAvailableRooms();
     });
