@@ -55,7 +55,7 @@ body .container{
     z-index: 1;
 }
 .logo{
-    max-width: 150px;
+    max-width: 120px;
     min-width: 80px;
     animation-name: rotateY;
     animation-duration: 2s;
@@ -126,6 +126,10 @@ body .container{
     background-image: url(../images/buttons/bet-button.png);
     line-height: 1;
 } 
+#play-side{
+    height: 90vh;
+    margin-bottom: 70px;
+}
 #play-side .card{
     background-image: url(../images/back/room-name.png);
 }
@@ -373,7 +377,7 @@ body .container{
     height: 30px;
     position: absolute;
     right: 5%;
-    top: 5%;
+    top: 1.5%;
 }
 .btn-list{
     background-image: url(../images/buttons/list-button.png);
@@ -404,16 +408,26 @@ body .container{
 }
 
 .coin-area{
-    height: calc(100vh - 240px);
+    height: calc(100vh - 350px);
+}
+
+.animated-dog{
+    width: 91px;
+    height: 97px;
+    position: absolute;
+    left: 48.3%;
+    bottom: -60px;
+    filter: brightness(0.8);
 }
 
 .coin{
-    width: 80px;
-    height: 80px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     bottom:  0;
     position: absolute;
-    left: calc(50% - 40px);
+    left: calc(50% - 5px);
+    z-index: 1;
 }
 .coin *{
     backface-visibility: hidden;
@@ -502,14 +516,19 @@ body .container{
     height: 75px;
     background-size: 100% 100%;
 }
-#toplist-modal .gold-medal{
-    background-image: url('../images/medals/gold-medal.png');
+#toplist-modal .table{
+    margin-bottom: 0;
+    text-shadow: 0 0 2px black,0 0 2px black,0 0 2px black,0 0 2px black,0 0 2px black,0 0 2px black;
 }
-#toplist-modal .silver-medal{
-    background-image: url('../images/medals/silver-medal.png');
+#toplist-modal .row:nth-child(2) table tbody{
+    display: none;
 }
-#toplist-modal .bronze-medal{
-    background-image: url('../images/medals/bronze-medal.png');
+#toplist-modal .row:nth-child(3){
+    height: 320px;
+    overflow: auto;
+}
+#toplist-modal .row:nth-child(3) table thead{
+    display: none;
 }
 #toplist-modal table tr>th:first-child{
     width: 50px;
@@ -520,11 +539,28 @@ body .container{
 #toplist-modal table div{
     float: left;
 }
+#toplist-modal .gold-medal-row{
+    background-color: #dbbc67;
+}
+#toplist-modal .silver-medal-row{
+    background-color: #eaeaec;
+}
+#toplist-modal .bronze-medal-row{
+    background-color: #b26a41;
+}
 #toplist-modal table tr>td{
     padding-top: 0;
     padding-bottom: 0;
 }
-
+#toplist-modal .gold-medal{
+    background-image: url('../images/medals/gold-medal.png');
+}
+#toplist-modal .silver-medal{
+    background-image: url('../images/medals/silver-medal.png');
+}
+#toplist-modal .bronze-medal{
+    background-image: url('../images/medals/bronze-medal.png');
+}
 #toplist-modal table .avatar{
     width: 60px;
     height: 60px;
@@ -536,3 +572,59 @@ body .container{
 #toplist-modal table td{
     line-height: 60px;
 }
+
+.modal-dialog {
+    padding: 20px;
+    border-radius: 30px;
+}
+.modal-dialog:before{
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    z-index: -1; 
+    border-radius: 30px;
+    background: linear-gradient(to bottom, #efd837,#f3e94c,#eec923,#af4700,#cb7c06,#e7c731);
+} 
+.modal-dialog .modal-content{
+    background: transparent;
+    padding: 7px;
+    border-radius: 25px;
+    color: white;
+}
+.modal-dialog .modal-content *{
+    color: white;
+}
+.modal-dialog .modal-content input{
+    color: black;
+}
+.modal-dialog .modal-content select{
+    background-color: transparent;
+    filter: brightness(1000%);
+}
+.modal-dialog .modal-content option{
+    background-color: #350505;
+}
+.modal-dialog .btn-close{
+    background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 0.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+}
+.modal-dialog .modal-content .modal-header{
+    background: linear-gradient(to bottom, #2a0202, #2e0303);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+.modal-dialog .modal-content .modal-body{
+    background: linear-gradient(to bottom, #2e0303, #5c1111);
+}
+.modal-dialog .modal-content .modal-footer{
+    background: linear-gradient(to bottom, #5c1111, #621213);
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.modal-dialog .modal-content:before{
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    z-index: -1; 
+    border-radius: 25px;
+    background: linear-gradient(to bottom, #b04600, #ffed17);
+} 

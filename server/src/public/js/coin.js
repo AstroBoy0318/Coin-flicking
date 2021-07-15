@@ -1,26 +1,48 @@
+const dogAnimateTime = 700, dogTotalClip = 10;
 let gameObject;
+function resetDog()
+{
+    $(".animated-dog").attr("src","images/animated-dog/1.png");
+}
 function coinFlip(side) {
+    $(".coin").hide();
+    window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
+    
     gameObject = new component($(".coin"), 80, 80, 0, 0, $(".coin-area").height() - $(".coin").height());
     let speed = getRandomInt(3, 6);
     let count = { 3: 39, 4: 29, 5: 23 };
-    accelerate(speed);
     let angleFront = 0, angleBack = 180;
     angleSpeed = (1800 + side * 180) / count[speed];
-    let interval = setInterval(() => {
-        rotate($(".coin div").eq(0), angleFront, angleFront + angleSpeed, 100);
-        rotate($(".coin div").eq(1), angleBack, angleBack + angleSpeed, 100);
-        angleFront += angleSpeed;
-        angleBack += angleSpeed;
-        gameObject.newPos();
-        gameObject.update();
-        if (gameObject.gravitySpeed <= 0) {
-            accelerate(-1 * speed);
+
+    let dogClip = 1;
+    let dogInterval = setInterval(() => {
+        $(".animated-dog").attr("src","images/animated-dog/"+dogClip+".png");
+        dogClip ++;
+        if(dogClip > 10)
+        {
+            clearInterval(dogInterval);
+            accelerate(speed);
+            $(".coin").show();
+            const curLeft = parseInt($(".coin").css("left"));
+            $(".coin").animate({ width: "80px", height: "80px", left: (curLeft-35)+'px' }, count[speed]*50);
+            $(".coin").animate({ width: "10px", height: "10px", left: curLeft+'px' }, count[speed]*50);
+            let interval = setInterval(() => {
+                rotate($(".coin div").eq(0), angleFront, angleFront + angleSpeed, 100);
+                rotate($(".coin div").eq(1), angleBack, angleBack + angleSpeed, 100);
+                angleFront += angleSpeed;
+                angleBack += angleSpeed;
+                gameObject.newPos();
+                gameObject.update();
+                if (gameObject.gravitySpeed <= 0) {
+                    accelerate(-1 * speed);
+                }
+                if (gameObject.y == 0) {
+                    clearInterval(interval);
+                }
+            }, 100);
         }
-        if (gameObject.y == 0) {
-            clearInterval(interval);
-        }
-    }, 100);
-    return 100*count[speed];
+    }, dogAnimateTime/dogTotalClip);
+    return 100*count[speed]+dogAnimateTime;
 }
 
 

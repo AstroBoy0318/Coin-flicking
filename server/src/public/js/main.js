@@ -10,6 +10,7 @@ $(function () {
             $("#" + el).hide();
     });
     $("#go-text").hide();
+    $("#high-score").hide();
     $("#go-text").removeClass("d-none");
     //add listeners
     $(".btn-list").on('click',()=>{
@@ -32,13 +33,13 @@ $(function () {
     $(".container").removeClass("d-none");    
     initWeb3();
 });
-function joinGame() {
-    myName = $("#join-game input").val();
-    if (myName.length == 0) {
-        showAlertModal("Please input your name");
-        return;
-    }
+
+function createSocket()
+{    
     socket = io();
+    socket.on('highscore', (messages) => {
+        updateTopList(messages.type, messages.data);
+    });
     socket.on('updateRooms', (messages) => {
         if ((messages.action == 'join' || messages.action == 'create') && messages.player == socket.id) {
             setPlayerStatus(messages.activeRoom);
@@ -101,12 +102,23 @@ function joinGame() {
             drawRoomList();
         }
     });
+}
+
+function joinGame() {
+    myName = $("#join-game input").val();
+    if (myName.length == 0) {
+        showAlertModal("Please input your name");
+        return;
+    }
+
+    createSocket();
+
     goToJoinRoom();
 }
 
 function goToJoinRoom() {
     $("#join-game").hide("drop", { direction: "up" }, () => {
-        $(".logo").hide();
+        $(".logo").parent('div').eq(0).hide();
         $("#join-room").show("drop", { direction: "up" }, () => {
             $(".coin-area").hide();
             $(".btn-back").show();
@@ -121,9 +133,11 @@ function goToJoinRoom() {
 }
 
 function goToGame() {
+    resetDog();
     $("#my-side .bet-amount").val(myAmount);
 
     $("#join-room").hide("drop", { direction: "up" }, () => {
+        $("#high-score").show("drop", { direction: "up" });
         $("#game-play").show("drop", { direction: "up" }, () => {
             $(".btn-back").off('click');
             $(".btn-back").on('click', () => {
@@ -135,8 +149,9 @@ function goToGame() {
 
 function backToJoinRoom() {
     exitRoom();
+    $("#high-score").hide("drop", { direction: "up" });
     $("#game-play").hide("drop", { direction: "up" }, () => {
-        $(".logo").hide();
+        $(".logo").parent('div').eq(0).hide();
         $("#join-room").show("drop", { direction: "up" }, () => {
             $(".coin-area").hide();
             $(".btn-back").show();
@@ -153,6 +168,7 @@ function backToJoinRoom() {
 function goToGameResult()
 {
     $("#winner-show").hide("drop", { direction: "up" });
+    $("#high-score").hide("drop", { direction: "up" });
     $("#game-play").hide("drop", { direction: "up" }, () => {
         $(".btn-back").show();
         $(".btn-back").off('click');
@@ -332,7 +348,6 @@ function getReady() {
     $("#bet-button").prop("disabled",true);
     if (toPay) {
         ready(myRoom.number, player, socket.id, amount).then((re) => {
-            console.log(re);
             if (re && re.status) {
                 socket.emit("roomAction", { action: "ready", number: myRoom.number});
             }
@@ -368,4 +383,33 @@ function showGoText(duration, callback) {
             callback();
         });
     }, duration / 2);
+}
+function updateTopList(type,resp){  
+    let html = '';
+    let mark = {1:'gold-medal',2:'silver-medal',3:'bronze-medal'};
+    for(let i = 0; i < resp.length; i++)
+    {
+        if(typeof mark[i+1] != "undefined")
+            html += '<tr class="'+mark[i+1]+'-row">';
+        else
+            html += '<tr>';
+
+        html += '<td>';
+        if(typeof mark[i+1] != "undefined")
+            html += '<div class="medal '+mark[i+1]+'"></div>';
+        else
+            html += '<div class="medal">'+(i+1)+'th</div>';
+        html += '</td>';
+        html += '<td>';
+        html += '<div class="avatar avatar-'+resp[i]['avatar']+'"></div><div class="player-name">'+resp[i]['name']+'</div>';
+        html += '</td>';
+        html += '<td>';
+        html += resp[i].reward;
+        html += '</td>';
+
+        html += '</tr>';
+    }
+    if(html == '')
+        html = '<tr><td colspan=3>No data</td></tr>';
+    $("tbody",$("#"+type+"-part")).html(html);
 }

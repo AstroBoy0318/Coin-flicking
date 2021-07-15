@@ -13,9 +13,12 @@ function emptyOrRows(rows) {
     }
     return rows;
 }
-function getTopList(type, date, limit ,res) {
+function getTopList(type, date, limit ,socket) {
     let where = `DATE_FORMAT(ctime,'%Y-%m')=DATE_FORMAT('` + date + `','%Y-%m')`;
     switch (type) {
+        case 'month':
+            where = ` 1=1`;
+            break;
         case 'week':
             where += ` and WEEKOFYEAR(ctime)=WEEKOFYEAR('` + date + `')`;
             break;
@@ -26,12 +29,25 @@ function getTopList(type, date, limit ,res) {
     pool.query(
         `SELECT * FROM coinflip_history where reward > 0 and `+ where + ` order by reward desc LIMIT 0,?`,
         [ parseInt(limit) ], (err, rows)=>{
-            data = emptyOrRows(rows);
-            res.json(data);
+            let data = emptyOrRows(rows);
+            socket.emit("highscore",{ type: type, data: data });
         }
     );
 }
-
+function getHighScore(socket)
+{
+    pool.query(
+        `SELECT max(reward) as highscore FROM coinflip_history`, (err, rows)=>{
+            let data = emptyOrRows(rows);
+            let highscore = 0;
+            if(data.length > 0)
+            {
+                highscore = data[0].highscore;
+            }
+            socket.emit("highscore",{ value: highscore });
+        }
+    );
+}
 function insertRow(name, avatar, bet, reward) {
     pool.query(
         "insert into coinflip_history (`name`,`avatar`,`bet`,`reward`,`ctime`) values ( ?, ?, ?, ?, now())", 
@@ -41,5 +57,6 @@ function insertRow(name, avatar, bet, reward) {
 
 module.exports = {
     getTopList,
+    getHighScore,
     insertRow
 }

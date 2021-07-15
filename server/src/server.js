@@ -2,7 +2,7 @@ let http = require('http');
 let express = require('express');
 let Web3 = require('web3');
 let Room = require('./room.js');
-const { getTopList, insertRow } = require('./db.js');
+const { getTopList, insertRow,getHighScore } = require('./db.js');
 const dateFormat = require('dateformat');
 
 const port = 8080;
@@ -43,6 +43,15 @@ let io = require('socket.io')(server);
 io.on('connection', function (socket) {
     try{
         let sessionId = socket.id;
+        sendHighScore();
+
+        function sendHighScore()
+        {            
+            let now = dateFormat(new Date(), "yyyy-mm-dd");
+            getTopList("alltime",now,10, socket);
+            getTopList("day",now,10, socket);
+        }
+
         socket.on('disconnect', function () {
             console.log('Got disconnect! Id: ' + socket.id);
             let room = rooms[playersRoom[sessionId] - 1];
@@ -128,8 +137,12 @@ io.on('connection', function (socket) {
                                 pvKey
                             ).then((signedTx) => {
                                 sendTransaction(signedTx, room);
+                                //add history
                                 insertRow(room.playerA, room.sideA, room.betA, (room.winner == 'A' ? betAmount * 0.95 : 0));
                                 insertRow(room.playerB, room.sideB, room.betB, (room.winner == 'B' ? betAmount * 0.95 : 0));
+                                //update highscore                                
+                                sendHighScore();
+
                                 room.exitPlayerA();
                                 room.exitPlayerB();
                                 //web3.eth.sendSignedTransaction(signedTx.rawTransaction);
@@ -139,9 +152,12 @@ io.on('connection', function (socket) {
                         });
                     }
                     else {
+                        //add history
                         insertRow(room.playerA, room.sideA, room.betA, (room.winner == 'A' ? (betAmount * 0.95) : 0));
                         insertRow(room.playerB, room.sideB, room.betB, (room.winner == 'B' ? (betAmount * 0.95) : 0));
-
+                        //update highscore
+                        sendHighScore();
+                        
                         setTimeout(() => {
                             room.exitPlayerA();
                             room.exitPlayerB();
@@ -157,10 +173,6 @@ io.on('connection', function (socket) {
             let availableRooms = getAvailableRooms();
             resp['rooms'] = availableRooms;
             io.emit('updateRooms', resp);
-        });
-
-        socket.on('chat message', (msg) => {
-            io.emit('chat message', msg);
         });
 
         function joinRoom(message) {
@@ -186,7 +198,9 @@ io.on('connection', function (socket) {
         function exitRoom() {
             let room = rooms[playersRoom[sessionId] - 1];
             if(typeof room == "undefined")
-                return;
+            {
+                return {};
+            }
             if (room.playerIDA == sessionId)
                 room.exitPlayerA();
             else if (room.playerIDB == sessionId)
