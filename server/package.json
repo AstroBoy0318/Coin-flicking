@@ -1,8 +1,10 @@
 {
   "dependencies": {
+    "dateformat": "^4.5.1",
     "ethereumjs-tx": "^2.1.2",
     "ethers": "^5.4.1",
     "express": "^4.17.1",
+    "mysql2": "^2.2.5",
     "socket.io": "^4.1.2",
     "web3": "^1.4.0"
   },

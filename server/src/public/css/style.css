@@ -45,7 +45,7 @@ body .bg-image{
     left: 0;
     filter: blur(10px);
     -webkit-filter: blur(10px);
-    background-image: url(../images/back.jpg);
+    background-image: url(../images/back/back.jpg);
     background-size: cover;
     background-position: center;
     opacity: 0.8;
@@ -70,13 +70,13 @@ body .container{
     }
 }
 #join-game .card{
-    background-image: url(../images/join-game.png);
+    background-image: url(../images/back/join-game.png);
     width: 500px;
     height: 500px;
     color: white;
 }
 #join-room .card{
-    background-image: url(../images/join-room.png);
+    background-image: url(../images/back/join-room.png);
     width: 500px;
     height: 700px;
     color: white;
@@ -109,25 +109,25 @@ body .container{
     margin: 0;
 }
 #join-room .list-group .room-item .nouser{
-    background-image: url(../images/room-nouser.png);
+    background-image: url(../images/back/room-nouser.png);
 }
 #join-room .list-group .room-item .user{
-    background-image: url(../images/room-user.png);
+    background-image: url(../images/back/room-user.png);
 }
 #game-play .card{
-    background-image: url(../images/game-play-card.png);
+    background-image: url(../images/back/game-play-card.png);
 }
 #game-play .card .card-title{
-    background-image: url(../images/player-name.png);
+    background-image: url(../images/back/player-name.png);
     color: white;
     background-size: 100% 100%;
 }
 #game-play .card .btn-success{
-    background-image: url(../images/bet-button.png);
+    background-image: url(../images/buttons/bet-button.png);
     line-height: 1;
 } 
 #play-side .card{
-    background-image: url(../images/room-name.png);
+    background-image: url(../images/back/room-name.png);
 }
 #game-play .avatar-div .avatar{
     width: 120px;
@@ -143,97 +143,97 @@ body .container{
     cursor: not-allowed;
 }
 #game-play .avatar-div .avatar-0{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/0.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/0.png);
 }
 #game-play .avatar-div .avatar-1{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/1.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/1.png);
 }
 #game-play .avatar-div .avatar-2{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/2.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/2.png);
 }
 #game-play .avatar-div .avatar-3{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/3.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/3.png);
 }
 #game-play .avatar-div .avatar-4{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/4.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/4.png);
 }
 #game-play .avatar-div .avatar-5{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/5.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/5.png);
 }
 #game-play .avatar-div .avatar-6{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/6.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/6.png);
 }
 #game-play .avatar-div .avatar-7{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/7.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/7.png);
 }
 #game-play .avatar-div .avatar-8{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/8.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/8.png);
 }
 #game-play .avatar-div .avatar-9{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/9.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/9.png);
 }
 #game-play .avatar-div .avatar-10{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/10.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/10.png);
 }
 #game-play .avatar-div .avatar-11{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/11.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/11.png);
 }
 #game-play .avatar-div .avatar-12{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/12.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/12.png);
 }
 #game-play .avatar-div .avatar-13{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/13.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/13.png);
 }
 #game-play .avatar-div .avatar-14{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/14.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/14.png);
 }
 #game-play .avatar-div .avatar-15{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/15.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/15.png);
 }
 #game-play .avatar-div .avatar-16{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/16.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/16.png);
 }
 #game-play .avatar-div .avatar-17{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/17.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/17.png);
 }
 #game-play .avatar-div .avatar-18{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/18.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/18.png);
 }
 #game-play .avatar-div .avatar-19{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/19.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/19.png);
 }
 #game-play .avatar-div .avatar-20{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/20.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/20.png);
 }
 #game-play .avatar-div .avatar-21{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/21.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/21.png);
 }
 #game-play .avatar-div .avatar-22{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/22.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/22.png);
 }
 #game-play .avatar-div .avatar-23{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/23.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/23.png);
 }
 #game-play .avatar-div .avatar-24{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/24.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/24.png);
 }
 #game-play .avatar-div .avatar-25{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/25.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/25.png);
 }
 #game-play .avatar-div .avatar-26{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/26.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/26.png);
 }
 #game-play .avatar-div .avatar-27{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/27.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/27.png);
 }
 #game-play .avatar-div .avatar-28{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/28.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/28.png);
 }
 #game-play .avatar-div .avatar-29{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/29.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/29.png);
 }
 #game-play .avatar-div .avatar-30{
-    background-image: url(../images/avatar-back.png), url(../images/avatars/30.png);
+    background-image: url(../images/back/avatar-back.png), url(../images/avatars/30.png);
 }
 
 #avatar-modal .avatar{
@@ -259,94 +259,94 @@ body .container{
 #avatar-modal .avatar-0{
     background-image: url(../images/avatars/0.png);
 }
-#avatar-modal .avatar-1,.coin .avatar-1{
+#avatar-modal .avatar-1,.coin .avatar-1,#toplist-modal .avatar-1{
     background-image: url(../images/avatars/1.png);
 }
-#avatar-modal .avatar-2,.coin .avatar-2{
+#avatar-modal .avatar-2,.coin .avatar-2,#toplist-modal .avatar-2{
     background-image: url(../images/avatars/2.png);
 }
-#avatar-modal .avatar-3,.coin .avatar-3{
+#avatar-modal .avatar-3,.coin .avatar-3,#toplist-modal .avatar-3{
     background-image: url(../images/avatars/3.png);
 }
-#avatar-modal .avatar-4,.coin .avatar-4{
+#avatar-modal .avatar-4,.coin .avatar-4,#toplist-modal .avatar-4{
     background-image: url(../images/avatars/4.png);
 }
-#avatar-modal .avatar-5,.coin .avatar-5{
+#avatar-modal .avatar-5,.coin .avatar-5,#toplist-modal .avatar-5{
     background-image: url(../images/avatars/5.png);
 }
-#avatar-modal .avatar-6,.coin .avatar-6{
+#avatar-modal .avatar-6,.coin .avatar-6,#toplist-modal .avatar-6{
     background-image: url(../images/avatars/6.png);
 }
-#avatar-modal .avatar-7,.coin .avatar-7{
+#avatar-modal .avatar-7,.coin .avatar-7,#toplist-modal .avatar-7{
     background-image: url(../images/avatars/7.png);
 }
-#avatar-modal .avatar-8,.coin .avatar-8{
+#avatar-modal .avatar-8,.coin .avatar-8,#toplist-modal .avatar-8{
     background-image: url(../images/avatars/8.png);
 }
-#avatar-modal .avatar-9,.coin .avatar-9{
+#avatar-modal .avatar-9,.coin .avatar-9,#toplist-modal .avatar-9{
     background-image: url(../images/avatars/9.png);
 }
-#avatar-modal .avatar-10,.coin .avatar-10{
+#avatar-modal .avatar-10,.coin .avatar-10,#toplist-modal .avatar-10{
     background-image: url(../images/avatars/10.png);
 }
-#avatar-modal .avatar-11,.coin .avatar-11{
+#avatar-modal .avatar-11,.coin .avatar-11,#toplist-modal .avatar-11{
     background-image: url(../images/avatars/11.png);
 }
-#avatar-modal .avatar-12,.coin .avatar-12{
+#avatar-modal .avatar-12,.coin .avatar-12,#toplist-modal .avatar-12{
     background-image: url(../images/avatars/12.png);
 }
-#avatar-modal .avatar-13,.coin .avatar-13{
+#avatar-modal .avatar-13,.coin .avatar-13,#toplist-modal .avatar-13{
     background-image: url(../images/avatars/13.png);
 }
-#avatar-modal .avatar-14,.coin .avatar-14{
+#avatar-modal .avatar-14,.coin .avatar-14,#toplist-modal .avatar-14{
     background-image: url(../images/avatars/14.png);
 }
-#avatar-modal .avatar-15,.coin .avatar-15{
+#avatar-modal .avatar-15,.coin .avatar-15,#toplist-modal .avatar-15{
     background-image: url(../images/avatars/15.png);
 }
-#avatar-modal .avatar-16,.coin .avatar-16{
+#avatar-modal .avatar-16,.coin .avatar-16,#toplist-modal .avatar-16{
     background-image: url(../images/avatars/16.png);
 }
-#avatar-modal .avatar-17,.coin .avatar-17{
+#avatar-modal .avatar-17,.coin .avatar-17,#toplist-modal .avatar-17{
     background-image: url(../images/avatars/17.png);
 }
-#avatar-modal .avatar-18,.coin .avatar-18{
+#avatar-modal .avatar-18,.coin .avatar-18,#toplist-modal .avatar-18{
     background-image: url(../images/avatars/18.png);
 }
-#avatar-modal .avatar-19,.coin .avatar-19{
+#avatar-modal .avatar-19,.coin .avatar-19,#toplist-modal .avatar-19{
     background-image: url(../images/avatars/19.png);
 }
-#avatar-modal .avatar-20,.coin .avatar-20{
+#avatar-modal .avatar-20,.coin .avatar-20,#toplist-modal .avatar-20{
     background-image: url(../images/avatars/20.png);
 }
-#avatar-modal .avatar-21,.coin .avatar-21{
+#avatar-modal .avatar-21,.coin .avatar-21,#toplist-modal .avatar-21{
     background-image: url(../images/avatars/21.png);
 }
-#avatar-modal .avatar-22,.coin .avatar-22{
+#avatar-modal .avatar-22,.coin .avatar-22,#toplist-modal .avatar-22{
     background-image: url(../images/avatars/22.png);
 }
-#avatar-modal .avatar-23,.coin .avatar-23{
+#avatar-modal .avatar-23,.coin .avatar-23,#toplist-modal .avatar-23{
     background-image: url(../images/avatars/23.png);
 }
-#avatar-modal .avatar-24,.coin .avatar-24{
+#avatar-modal .avatar-24,.coin .avatar-24,#toplist-modal .avatar-24{
     background-image: url(../images/avatars/24.png);
 }
-#avatar-modal .avatar-25,.coin .avatar-25{
+#avatar-modal .avatar-25,.coin .avatar-25,#toplist-modal .avatar-25{
     background-image: url(../images/avatars/25.png);
 }
-#avatar-modal .avatar-26,.coin .avatar-26{
+#avatar-modal .avatar-26,.coin .avatar-26,#toplist-modal .avatar-26{
     background-image: url(../images/avatars/26.png);
 }
-#avatar-modal .avatar-27,.coin .avatar-27{
+#avatar-modal .avatar-27,.coin .avatar-27,#toplist-modal .avatar-27{
     background-image: url(../images/avatars/27.png);
 }
-#avatar-modal .avatar-28,.coin .avatar-28{
+#avatar-modal .avatar-28,.coin .avatar-28,#toplist-modal .avatar-28{
     background-image: url(../images/avatars/28.png);
 }
-#avatar-modal .avatar-29,.coin .avatar-29{
+#avatar-modal .avatar-29,.coin .avatar-29,#toplist-modal .avatar-29{
     background-image: url(../images/avatars/29.png);
 }
-#avatar-modal .avatar-30,.coin .avatar-30{
+#avatar-modal .avatar-30,.coin .avatar-30,#toplist-modal .avatar-30{
     background-image: url(../images/avatars/30.png);
 }
 
@@ -368,16 +368,24 @@ body .container{
     transform: scale(1.1);
 }
 .btn-back{
-    background-image: url(../images/back-button.png);
+    background-image: url(../images/buttons/back-button.png);
     width: 40px;
     height: 30px;
     position: absolute;
     right: 5%;
     top: 5%;
 }
+.btn-list{
+    background-image: url(../images/buttons/list-button.png);
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    left: 5%;
+    top: 5%;
+}
 .btn-primary{
     padding: 0 1em;
-    background-image: url(../images/normal-button.png);
+    background-image: url(../images/buttons/normal-button.png);
 }
 #go-text{
     background: rgba(0,0,0,0.6);
@@ -437,7 +445,7 @@ body .container{
 }
 
 #winner-show .dog{
-    background-image: url(../images/winner-show.png);
+    background-image: url(../images/back/winner-show.png);
     background-size: 100% 100%;
     width: 400px;
     height: 500px;
@@ -459,10 +467,10 @@ body .container{
 #game-result .card{
     width: 500px;
     height: 700px;
-    background-image: url(../images/win-back.png);
+    background-image: url(../images/back/win-back.png);
 }
 #game-result .failed{
-    background-image: url(../images/fail-back.png);
+    background-image: url(../images/back/fail-back.png);
 }
 #game-result .reward-info{
     margin-top: 84%;
@@ -477,7 +485,7 @@ body .container{
     height: 60px;
 }
 #game-result #home-button{
-    background-image: url(../images/home-button.png);
+    background-image: url(../images/buttons/home-button.png);
 }
 #fireworks{
     position: fixed;
@@ -485,4 +493,46 @@ body .container{
     height: 100%;
     left: 0;
     top: 0;
+}
+#toplist-modal td{
+    vertical-align: middle;
+}
+#toplist-modal .medal{
+    width: 40px;
+    height: 75px;
+    background-size: 100% 100%;
+}
+#toplist-modal .gold-medal{
+    background-image: url('../images/medals/gold-medal.png');
+}
+#toplist-modal .silver-medal{
+    background-image: url('../images/medals/silver-medal.png');
+}
+#toplist-modal .bronze-medal{
+    background-image: url('../images/medals/bronze-medal.png');
+}
+#toplist-modal table tr>th:first-child{
+    width: 50px;
+}
+#toplist-modal table tr>td:first-child{
+    text-align: center;
+}
+#toplist-modal table div{
+    float: left;
+}
+#toplist-modal table tr>td{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+#toplist-modal table .avatar{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-size: 100% 100%;
+    border: 1px solid #e3aa0e;
+    margin-right: 10px;
+}
+#toplist-modal table td{
+    line-height: 60px;
 }

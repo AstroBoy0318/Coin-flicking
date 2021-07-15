@@ -15,6 +15,7 @@
     <div class="bg-image"></div>
     <div class="container d-none">
         <button class="btn btn-back"></button>
+        <button class="btn btn-list"></button>
         <div class="p-3 text-center">
             <img src="images/logo.png" class="w-25 logo">
         </div>
@@ -203,6 +204,44 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary fs-3">Ok</button>
+                        <button type="button" class="btn btn-warning fs-3" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="toplist-modal" class="modal lh-1" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title fs-3">Top players</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <select class="form-select fs-4" id="toplist-type">
+                                    <option value="day">Today</option>
+                                    <option value="week">This week</option>
+                                    <option value="month">This month</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div clas="col-sm-12">
+                                <table class="table table-striped fs-4">
+                                    <thead>
+                                        <th></th>
+                                        <th>Player</th>
+                                        <th>Reward</th>
+                                    </thead>
+                                    <tbody>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
                         <button type="button" class="btn btn-warning fs-3" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>

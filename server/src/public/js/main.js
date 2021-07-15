@@ -10,15 +10,18 @@ $(function () {
             $("#" + el).hide();
     });
     $("#go-text").hide();
-    $(".container").removeClass("d-none");
+    $("#go-text").removeClass("d-none");
+    //add listeners
+    $(".btn-list").on('click',()=>{
+        showTopListModal();
+    });
     $("#my-side .bet-amount").on('change', function () {
         myAmount = parseFloat($(this).val());
     });
-    $("#go-text").removeClass("d-none");
-    initWeb3();
     $("#winner-show").on('click',()=>{
         goToGameResult();
     });
+    //firework effect
     $('#fireworks').hide();
     $('#fireworks').fireworks({
         sound: true,
@@ -26,6 +29,8 @@ $(function () {
         width: '100%',
         height: '100%'
     });
+    $(".container").removeClass("d-none");    
+    initWeb3();
 });
 function joinGame() {
     myName = $("#join-game input").val();
@@ -116,8 +121,6 @@ function goToJoinRoom() {
 }
 
 function goToGame() {
-    myAmount = 0;
-    myAvatar = 0;
     $("#my-side .bet-amount").val(myAmount);
 
     $("#join-room").hide("drop", { direction: "up" }, () => {
@@ -216,6 +219,8 @@ function drawRoomList() {
 }
 
 function createRoom() {
+    myAmount = 0;
+    myAvatar = 0;
     showCreateRoomModal(() => {
         let roomName = $("#room-name-input").val();
         socket.emit("roomAction", { action: 'create', playerName: myName, roomName: roomName });
@@ -223,6 +228,8 @@ function createRoom() {
 }
 
 function joinRoom(number) {
+    myAmount = 0;
+    myAvatar = 0;
     socket.emit("roomAction", { action: 'join', roomNumber: number, playerName: myName });
 }
 
@@ -317,8 +324,8 @@ function getReady() {
         player = 'B';
         // amount = myRoom.betB;
     }
-    if (myAmount <= 0) {
-        showAlertModal("Please input correct bet amount.");
+    if (myAmount <= minAmount) {
+        showAlertModal("Please input bigger than "+minAmount+".");
         return;
     }
     $("#ready-button").prop("disabled",true);
