@@ -106,6 +106,12 @@ function createSocket()
 }
 
 function joinGame() {
+    if(!web3Valid())
+    {
+        showReloadModal("Please connect your wallet.");
+        return;
+    }
+
     myName = $("#join-game input").val();
     if (myName.length == 0) {
         showAlertModal("Please input your name");
@@ -345,6 +351,7 @@ function getReady() {
         showAlertModal("Please input bigger than "+minAmount+".");
         return;
     }
+    amount = myAmount;
     $("#ready-button").prop("disabled",true);
     $("#bet-button").prop("disabled",true);
     if (toPay) {

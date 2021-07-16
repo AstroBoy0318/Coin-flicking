@@ -417,21 +417,21 @@ body .container{
 }
 
 .animated-dog{
-    width: 91px;
-    height: 97px;
+    width: 230px;
+    height: 250px;
     position: absolute;
-    left: 48.3%;
-    bottom: -60px;
+    left: calc(50% - 55.5px);
+    bottom: -155px;
     filter: brightness(0.8);
 }
 
 .coin{
-    width: 10px;
-    height: 10px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
-    bottom:  0;
+    bottom: 0;
     position: absolute;
-    left: calc(50% - 5px);
+    left: calc(50% - 17.5px);
     z-index: 1;
 }
 .coin *{
