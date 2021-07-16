@@ -64,7 +64,8 @@ function createSocket()
                     $(".coin .front-side").attr("class", "front-side avatar-" + myRoom.sideA);
                     $(".coin .back-side").attr("class", "back-side avatar-" + myRoom.sideB);
                     $(".coin-area").show();
-                    let time = coinFlip(winSide);
+                    let speed = messages.speed;
+                    let time = coinFlip(winSide,speed);
 
                     setTimeout(()=>{
                         if(winSide == 0)

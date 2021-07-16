@@ -121,6 +121,7 @@ body .container{
     background-image: url(../images/back/player-name.png);
     color: white;
     background-size: 100% 100%;
+    text-shadow: 0 0 2px black,0 0 2px black,0 0 2px black,0 0 2px black,0 0 2px black;
 }
 #game-play .card .btn-success{
     background-image: url(../images/buttons/bet-button.png);
@@ -131,7 +132,11 @@ body .container{
     margin-bottom: 70px;
 }
 #play-side .card{
+    background: none;
+}
+#play-side .card .card-title{
     background-image: url(../images/back/room-name.png);
+    text-shadow: 0 0 2px black,0 0 2px black,0 0 2px black,0 0 2px black,0 0 2px black;
 }
 #game-play .avatar-div .avatar{
     width: 120px;
@@ -508,20 +513,20 @@ body .container{
     left: 0;
     top: 0;
 }
+#toplist-modal{
+    width: 1000px;
+    margin: 0 auto;
+}
 #toplist-modal td{
     vertical-align: middle;
-}
-#toplist-modal .medal{
-    width: 40px;
-    height: 75px;
-    background-size: 100% 100%;
 }
 #toplist-modal .table{
     margin-bottom: 0;
     text-shadow: 0 0 2px black,0 0 2px black,0 0 2px black,0 0 2px black,0 0 2px black,0 0 2px black;
 }
-#toplist-modal .row:nth-child(2) table tbody{
-    display: none;
+#toplist-modal .modal-body>.row>.col-sm-6>.row:nth-child(2){
+    height: 53px;
+    overflow: hidden;
 }
 #toplist-modal .row:nth-child(3){
     height: 320px;
@@ -533,33 +538,69 @@ body .container{
 #toplist-modal table tr>th:first-child{
     width: 50px;
 }
-#toplist-modal table tr>td:first-child{
+#toplist-modal table tr>th:nth-child(3){
     text-align: center;
 }
 #toplist-modal table div{
     float: left;
 }
 #toplist-modal .gold-medal-row{
-    background-color: #dbbc67;
+    /*background: linear-gradient(to bottom,#ab8637, #dbbc67,#f2e5b2, #dbbc67,#ab8637);*/
+    background-image: url(../images/back/gold-pan.jpg);
+    background-size: 100% 100%;
+}
+#toplist-modal .gold-medal-row td{
+    padding-top: 7px;
+    padding-bottom: 7px;
 }
 #toplist-modal .silver-medal-row{
-    background-color: #eaeaec;
+    /*background: linear-gradient(to bottom, #4f565f, #929498, #ececee, #929498, #4f565f);*/
+    background-image: url(../images/back/silver-pan.jpg);
+    background-size: 100% 100%;
+}
+#toplist-modal .silver-medal-row td{
+    padding-top: 7px;
+    padding-bottom: 7px;
 }
 #toplist-modal .bronze-medal-row{
-    background-color: #b26a41;
+    /*background: linear-gradient(to bottom, #943d18, #b05e22,#f0d4b2, #b05e22, #943d18);*/
+    background-image: url(../images/back/bronze-pan.jpg);
+    background-size: 100% 100%;
+}
+#toplist-modal .bronze-medal-row td{
+    padding-top: 7px;
+    padding-bottom: 7px;
 }
 #toplist-modal table tr>td{
     padding-top: 0;
     padding-bottom: 0;
 }
-#toplist-modal .gold-medal{
-    background-image: url('../images/medals/gold-medal.png');
+#toplist-modal .medal{
+    width: 50px;
+    height: 75px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    float: none;
+    margin: 0 auto;
 }
-#toplist-modal .silver-medal{
-    background-image: url('../images/medals/silver-medal.png');
+#toplist-modal #alltime-part .gold-medal{
+    background-image: url('../images/medals/gold-medal-alltime.png');
 }
-#toplist-modal .bronze-medal{
-    background-image: url('../images/medals/bronze-medal.png');
+#toplist-modal #alltime-part .silver-medal{
+    background-image: url('../images/medals/silver-medal-alltime.png');
+}
+#toplist-modal #alltime-part .bronze-medal{
+    background-image: url('../images/medals/bronze-medal-alltime.png');
+}
+#toplist-modal #day-part .gold-medal{
+    background-image: url('../images/medals/gold-medal-day.png');
+}
+#toplist-modal #day-part .silver-medal{
+    background-image: url('../images/medals/silver-medal-day.png');
+}
+#toplist-modal #day-part .bronze-medal{
+    background-image: url('../images/medals/bronze-medal-day.png');
 }
 #toplist-modal table .avatar{
     width: 60px;
@@ -628,3 +669,18 @@ body .container{
     border-radius: 25px;
     background: linear-gradient(to bottom, #b04600, #ffed17);
 } 
+
+.gold-text{
+    background-image: linear-gradient(
+        to right,
+        #462523 0,
+               #cb9b51 22%, 
+        #f6e27a 45%,
+        #f6f2c0 50%,
+        #f6e27a 55%,
+        #cb9b51 78%,
+        #462523 100%
+        );
+    color:transparent !important;
+    -webkit-background-clip:text;
+}

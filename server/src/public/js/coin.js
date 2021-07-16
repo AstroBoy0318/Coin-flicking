@@ -4,12 +4,12 @@ function resetDog()
 {
     $(".animated-dog").attr("src","images/animated-dog/1.png");
 }
-function coinFlip(side) {
+function coinFlip(side, speed) {
     $(".coin").hide();
     window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
-    
+
     gameObject = new component($(".coin"), 80, 80, 0, 0, $(".coin-area").height() - $(".coin").height());
-    let speed = getRandomInt(3, 6);
+    // let speed = getRandomInt(3, 6);
     let count = { 3: 39, 4: 29, 5: 23 };
     let angleFront = 0, angleBack = 180;
     angleSpeed = (1800 + side * 180) / count[speed];
