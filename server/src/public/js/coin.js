@@ -24,7 +24,7 @@ function coinFlip(side, speed) {
             accelerate(speed);
             $(".coin").show();
             const curLeft = parseInt($(".coin").css("left"));
-            $(".coin").animate({ width: "80px", height: "80px", left: (curLeft-22.5)+'px' }, count[speed]*50);
+            $(".coin").animate({ width: "100px", height: "100px", left: (curLeft-32.5)+'px' }, count[speed]*50);
             $(".coin").animate({ width: "35px", height: "35px", left: curLeft+'px' }, count[speed]*50);
             let interval = setInterval(() => {
                 rotate($(".coin div").eq(0), angleFront, angleFront + angleSpeed, 100);

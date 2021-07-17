@@ -472,6 +472,33 @@ body .container{
     left: calc(50% - 200px);
     top: calc(50% - 250px);
 }
+#winner-show .winner-name{
+    position: absolute;
+    left: 0;
+    bottom: 10px;
+    width: 100%;
+    line-height: 120px;
+    font-size: 50px;
+    white-space: nowrap;
+    overflow: visible;
+    text-align: center;    
+    background-image: linear-gradient(
+        to bottom,
+        #462523 0,
+               #cb9b51 22%, 
+        #f6e27a 45%,
+        #f6f2c0 50%,
+        #f6e27a 55%,
+        #cb9b51 78%,
+        #462523 100%
+        );
+    color: transparent;
+    -webkit-background-clip:text;
+}
+#winner-show .text-shadow
+{
+    text-shadow: 0 0 2px black,0 0 2px black,0 0 2px black,0 0 2px black,0 0 2px black,0 0 2px black;
+}
 #winner-show .dog .avatar{
     width: 120px;
     height: 120px;
@@ -480,7 +507,7 @@ body .container{
     bottom: 58px;
     left: calc(50% - 60px);
     background-size: 100% 100%;
-    box-shadow: 0 0 6px 6px rgba(182, 86, 3,0.5);
+    box-shadow: 0 0 6px 6px rgba(182, 86, 3,0.5);;
 }
 
 #game-result .card{
@@ -512,6 +539,7 @@ body .container{
     height: 100%;
     left: 0;
     top: 0;
+    overflow: hidden;
 }
 #toplist-modal{
     width: 1000px;

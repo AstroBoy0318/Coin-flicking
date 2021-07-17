@@ -250,10 +250,15 @@
 
     var launchFrom = function(x) {
         if (rockets.length < 10) {
-            var rocket = new Rocket(x);
+            var pos = 0.5;
+            if(Math.random() > 0.5)
+            {
+                pos = 1.5;
+            }
+            var rocket = new Rocket(x*pos);
             rocket.explosionColor = Math.floor(Math.random() * 360 / 10) * 10;
             rocket.vel.y = Math.random() * -3 - 4;
-            rocket.vel.x = Math.random() * 6 - 3;
+            rocket.vel.x = Math.random() * 4 - 2;
             rocket.size = 8;
             rocket.shrink = 0.999;
             rocket.gravity = 0.01;

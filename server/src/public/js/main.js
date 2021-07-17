@@ -76,6 +76,7 @@ function createSocket()
                         {
                             $("#winner-show .dog .avatar").css("background-image",$(".coin .back-side").css("background-image"));
                         }
+                        $("#winner-show .winner-name").html(winnerName);
                         $("#winner-show").removeClass("d-none");
                         $("#winner-show").show();
                         $("#winner-show .dog").hide();
