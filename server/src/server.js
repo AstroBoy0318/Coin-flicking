@@ -122,7 +122,7 @@ io.on('connection', function (socket) {
                     let winnerIndex = getRandomInt(0, 2);
                     room.winner = playersLabel[winnerIndex];
                     let betAmount = parseFloat(room.betA) + parseFloat(room.betB);
-                    let speed = getRandomInt(3,6);
+                    let speed = getRandomInt(4,6);
                     resp['speed'] = speed;
                     //send reward
                     if (toPay) {

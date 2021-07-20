@@ -14,6 +14,7 @@
 <body>
     <div class="bg-image"></div>
     <div class="container d-none">
+        <button class="btn btn-sound"></button>
         <button class="btn btn-back"></button>
         <div class="row pt-5 fs-3">
             <div class="col-sm-12 text-center" id="high-score">
@@ -330,6 +331,15 @@
     </div>
 
     <div id="fireworks"></div>
+
+
+    <div class="sound-block">
+        <audio id="coin-flip" src="sound/coinflip.wav"></audio>
+        <audio id="button-click" src="sound/button-click.wav"></audio>
+        <audio id="game-fail" src="sound/game-fail.mp3"></audio>
+        <audio id="alert" src="sound/alert-sound.wav"></audio>
+        <audio id="back-music" src="sound/back-music.mp3" loop></audio>
+    </div>
 </body>
 <script src="/socket.io/socket.io.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

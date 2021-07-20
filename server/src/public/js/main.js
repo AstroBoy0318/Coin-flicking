@@ -4,6 +4,32 @@ let rooms = [];
 let myRoom;
 let myAvatar = 0, myAmount = 0, otherAvatar = 0;
 $(function () {
+    setBackMusicVolume(0.08);
+    //mute button
+    let mute = getMute();
+    if(mute)
+    {
+        $(".btn-sound").addClass("btn-mute");
+        pauseBackMusic();
+    }
+    else
+    {
+        playBackMusic();
+    }
+    $(".btn-sound").on('click',()=>{
+        toggleMute();
+        if($(".btn-sound").hasClass("btn-mute"))
+        {
+            $(".btn-sound").removeClass("btn-mute");
+            playBackMusic();
+        }
+        else
+        {
+            $(".btn-sound").addClass("btn-mute");
+            pauseBackMusic();
+        }
+    });
+
     $(".btn-back").hide();
     screens.forEach((el, idx) => {
         if (idx > 0)
@@ -125,6 +151,8 @@ function joinGame() {
 }
 
 function goToJoinRoom() {
+    playSound("button-click");
+
     $("#join-game").hide("drop", { direction: "up" }, () => {
         $(".logo").parent('div').eq(0).hide();
         $("#join-room").show("drop", { direction: "up" }, () => {
@@ -132,7 +160,10 @@ function goToJoinRoom() {
             $(".btn-back").show();
             $(".btn-back").off('click');
             $(".btn-back").on('click', () => {
-                location.reload();
+                playSound("button-click");
+                $("#join-room").hide("drop",{ direction: "up" }, ()=>{
+                    location.reload();
+                });
             });
         });
         getAvailableRooms();
@@ -141,6 +172,8 @@ function goToJoinRoom() {
 }
 
 function goToGame() {
+    playSound("button-click");
+
     resetDog();
     $("#my-side .bet-amount").val(myAmount);
 
@@ -156,6 +189,8 @@ function goToGame() {
 }
 
 function backToJoinRoom() {
+    playSound("button-click");
+
     exitRoom();
     $("#high-score").hide("drop", { direction: "up" });
     $("#game-play").hide("drop", { direction: "up" }, () => {
@@ -175,6 +210,8 @@ function backToJoinRoom() {
 
 function goToGameResult()
 {
+    playSound("button-click");
+
     $("#winner-show").hide("drop", { direction: "up" });
     $("#high-score").hide("drop", { direction: "up" });
     $("#game-play").hide("drop", { direction: "up" }, () => {
@@ -193,10 +230,16 @@ function goToGameResult()
         {
             $('#fireworks').show();
         }
+        else
+        {            
+            playSound("game-fail");
+        }
     });
 }
 
 function backToJoinRoomFromResult() {
+    playSound("button-click");
+
     $("#game-result").hide("drop", { direction: "up" }, () => {
         $("#join-room").show("drop", { direction: "up" }, () => {
             $(".btn-back").show();
@@ -331,6 +374,7 @@ function doBet() {
         showAlertModal("Please select your avatar.");
         return false;
     }
+    playSound("button-click");
     socket.emit("roomAction", { action: "bet", number: myRoom.number, side: side, bet: myAmount });
     return true;
 }
@@ -355,6 +399,9 @@ function getReady() {
     amount = myAmount;
     $("#ready-button").prop("disabled",true);
     $("#bet-button").prop("disabled",true);
+
+    playSound("button-click");
+
     if (toPay) {
         ready(myRoom.number, player, socket.id, amount).then((re) => {
             if (re && re.status) {

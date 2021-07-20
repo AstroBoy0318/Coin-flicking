@@ -132,7 +132,8 @@
             return Math.floor(Math.random() * (max - min + 1)) + min;
           }(0, 2);
           audio.src = sounds[randomNumber].prefix + sounds[randomNumber].data;
-          audio.play();
+          if(!getMute())
+            audio.play();
         }
 
         var count = Math.random() * 10 + 80;

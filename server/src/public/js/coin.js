@@ -12,7 +12,7 @@ function coinFlip(side, speed) {
     // let speed = getRandomInt(3, 6);
     let count = { 3: 39, 4: 29, 5: 23 };
     let angleFront = 0, angleBack = 180;
-    angleSpeed = (1800 + side * 180) / count[speed];
+    angleSpeed = (3600 + side * 180) / count[speed];
 
     let dogClip = 1;
     let dogInterval = setInterval(() => {
@@ -21,10 +21,14 @@ function coinFlip(side, speed) {
         if(dogClip > 10)
         {
             clearInterval(dogInterval);
+
+            // play sound
+            playSound("coin-flip");
+
             accelerate(speed);
             $(".coin").show();
             const curLeft = parseInt($(".coin").css("left"));
-            $(".coin").animate({ width: "100px", height: "100px", left: (curLeft-32.5)+'px' }, count[speed]*50);
+            $(".coin").animate({ width: "130px", height: "130px", left: (curLeft-47.5)+'px' }, count[speed]*50);
             $(".coin").animate({ width: "35px", height: "35px", left: curLeft+'px' }, count[speed]*50);
             let interval = setInterval(() => {
                 rotate($(".coin div").eq(0), angleFront, angleFront + angleSpeed, 100);

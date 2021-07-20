@@ -10,17 +10,25 @@ $(function(){
     topListModal = $("#toplist-modal");
 });
 function showReloadModal(msg){    
+    playSound("alert");
+
     $(".modal-body>p",reloadModal).html(msg);
     reloadModal.modal("show");
 }
 function showAlertModal(msg){    
+    playSound("alert");
+
     $(".modal-body>p",alertModal).html(msg);
     alertModal.modal("show");
 }
 function showAvatarModal(){    
+    playSound("alert");
+    
     avatarModal.modal("show");
 }
 function showCreateRoomModal(callback){
+    playSound("alert");
+
     createRoomModal.modal("show");
     let okBnt = $(".btn-primary", createRoomModal);
     okBnt.off("click");

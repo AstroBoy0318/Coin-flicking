@@ -43,10 +43,12 @@ body .bg-image{
     height: 100%;
     top: 0;
     left: 0;
+    /*
     filter: blur(10px);
     -webkit-filter: blur(10px);
-    background-image: url(../images/back/back.jpg);
-    background-size: cover;
+    */
+    background-image: url(../images/back/back1.jpg);
+    background-size: 100% 100%;
     background-position: center;
     opacity: 0.8;
 }
@@ -379,10 +381,21 @@ body .container{
 .btn-back{
     background-image: url(../images/buttons/back-button.png);
     width: 40px;
-    height: 30px;
+    height: 40px;
     position: absolute;
     right: 5%;
     top: 1.5%;
+}
+.btn-sound{
+    background-image: url(../images/buttons/sound-button.png);
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    left: 5%;
+    top: 1.5%;
+}
+.btn-mute{
+    background-image: url(../images/buttons/mute-button.png);
 }
 .btn-list{
     background-image: url(../images/buttons/list-button.png);
@@ -413,15 +426,15 @@ body .container{
 }
 
 .coin-area{
-    height: calc(100vh - 350px);
+    height: calc(100vh - 200px);
 }
 
 .animated-dog{
-    width: 230px;
-    height: 250px;
+    width: 250px;
+    height: 270px;
     position: absolute;
-    left: calc(50% - 55.5px);
-    bottom: -155px;
+    left: calc(50% - 60.5px);
+    bottom: -170px;
     filter: brightness(0.8);
 }
 
@@ -711,4 +724,9 @@ body .container{
         );
     color:transparent !important;
     -webkit-background-clip:text;
+}
+
+.sound-block{
+    width: 0;
+    height: 0;
 }
