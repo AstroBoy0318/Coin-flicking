@@ -392,7 +392,7 @@ function getReady() {
         player = 'B';
         // amount = myRoom.betB;
     }
-    if (myAmount <= minAmount) {
+    if (myAmount < minAmount) {
         showAlertModal("Please input bigger than "+minAmount+".");
         return;
     }

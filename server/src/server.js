@@ -2,11 +2,12 @@ let http = require('http');
 let express = require('express');
 let Web3 = require('web3');
 let Room = require('./room.js');
-const { getTopList, insertRow,getHighScore } = require('./db.js');
+const { getTopList, insertRow } = require('./db.js');
 const dateFormat = require('dateformat');
+const { getWinnerRate } = require('./util.js');
 
 const port = 8080;
-const toPay = false;
+const toPay = true;
 let rooms = [];
 let nextRoomNumber = 1;
 let players = {};
@@ -17,8 +18,8 @@ const adminWallet = "0xE5F60C04a06ef06933B13D902A4c76580e1478Fa";
 const pvKey = "0x15914feeb00cf4be8022a0dd1558511bb0caac12ded8ce1331b534a2e1e52440";
 const chainID = 97;
 const rpcUrl = { 97: "https://data-seed-prebsc-1-s1.binance.org:8545", 56: "https://bsc-dataseed1.defibit.io" }
-const contractAddress = { 97: "0x0c3DADefe94e8e6D2512D1cF4c542402D837bD4e", 56: "" };
-const abi = [{ "inputs": [], "stateMutability": "nonpayable", "type": "constructor" }, { "inputs": [], "name": "admin", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "playerID", "type": "string" }], "name": "bet", "outputs": [{ "internalType": "bool", "name": "success", "type": "bool" }], "stateMutability": "payable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "sender", "type": "address" }], "name": "changeAdmin", "outputs": [{ "internalType": "bool", "name": "success", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "a", "type": "string" }, { "internalType": "string", "name": "b", "type": "string" }], "name": "compareStrings", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "", "type": "string" }], "name": "players", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "number", "type": "uint256" }, { "internalType": "uint256", "name": "betAmount", "type": "uint256" }, { "internalType": "address", "name": "winner", "type": "address" }], "name": "prize", "outputs": [{ "internalType": "bool", "name": "success", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "newRate", "type": "uint256" }], "name": "updateWinnerRate", "outputs": [{ "internalType": "bool", "name": "success", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "winnerRate", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "withdraw", "outputs": [{ "internalType": "bool", "name": "success", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }];
+const contractAddress = { 97: "0xD95c839946506CA1D9D71c1d14a3257Dea20F91b", 56: "" };
+const abi = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"admin","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"playerID","type":"string"}],"name":"bet","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"sender","type":"address"}],"name":"changeAdmin","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"a","type":"string"},{"internalType":"string","name":"b","type":"string"}],"name":"compareStrings","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"","type":"string"}],"name":"players","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"number","type":"uint256"},{"internalType":"uint256","name":"betAmount","type":"uint256"},{"internalType":"uint256","name":"winnerRate","type":"uint256"},{"internalType":"address","name":"winner","type":"address"}],"name":"prize","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"newRate","type":"uint256"}],"name":"updateWinnerRate","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"winnerRate","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"withdraw","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"}];
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl[chainID]));
 const contract = new web3.eth.Contract(abi, contractAddress[chainID]);
 
@@ -123,11 +124,12 @@ io.on('connection', function (socket) {
                     room.winner = playersLabel[winnerIndex];
                     let betAmount = parseFloat(room.betA) + parseFloat(room.betB);
                     let speed = getRandomInt(4,6);
+                    let winnerRate = getWinnerRate(room.winner == 'A'?room.betA:room.betB);
                     resp['speed'] = speed;
                     //send reward
                     if (toPay) {
                         contract.methods.players(socket.id).call().then((winnerAddress) => {
-                            const query = contract.methods.prize(room.number, Web3.utils.toWei(betAmount.toString()).toString(), winnerAddress);
+                            const query = contract.methods.prize(room.number, Web3.utils.toWei(betAmount.toString()).toString(), winnerRate, winnerAddress);
                             const encodedABI = query.encodeABI();
                             web3.eth.accounts.signTransaction(
                                 {
@@ -140,8 +142,8 @@ io.on('connection', function (socket) {
                             ).then((signedTx) => {
                                 sendTransaction(signedTx, room);
                                 //add history
-                                insertRow(room.playerA, room.sideA, room.betA, (room.winner == 'A' ? betAmount * 0.95 : 0));
-                                insertRow(room.playerB, room.sideB, room.betB, (room.winner == 'B' ? betAmount * 0.95 : 0));
+                                insertRow(room.playerA, room.sideA, room.betA, (room.winner == 'A' ? betAmount * winnerRate / 1000 : 0));
+                                insertRow(room.playerB, room.sideB, room.betB, (room.winner == 'B' ? betAmount * winnerRate / 1000 : 0));
                                 //update highscore                                
                                 sendHighScore();
 
@@ -155,8 +157,8 @@ io.on('connection', function (socket) {
                     }
                     else {
                         //add history
-                        insertRow(room.playerA, room.sideA, room.betA, (room.winner == 'A' ? (betAmount * 0.95) : 0));
-                        insertRow(room.playerB, room.sideB, room.betB, (room.winner == 'B' ? (betAmount * 0.95) : 0));
+                        insertRow(room.playerA, room.sideA, room.betA, (room.winner == 'A' ? (betAmount * winnerRate / 1000) : 0));
+                        insertRow(room.playerB, room.sideB, room.betB, (room.winner == 'B' ? (betAmount * winnerRate / 1000) : 0));
                         //update highscore
                         sendHighScore();
                         
