@@ -1,4 +1,4 @@
-let reloadModal, alertModal, avatarModal,createRoomModal,topListModal;
+let reloadModal, alertModal, avatarModal,createRoomModal,topListModal,helpModal,disclaimerModal;
 $(function(){
     reloadModal = $("#reload-modal");
     reloadModal.on("hide.bs.modal",()=>{
@@ -8,6 +8,8 @@ $(function(){
     avatarModal = $("#avatar-modal");
     createRoomModal = $("#create-room-modal");
     topListModal = $("#toplist-modal");
+    helpModal = $("#help-modal");
+    disclaimerModal = $("#disclaimer-modal");
 });
 function showReloadModal(msg){    
     playSound("alert");
@@ -39,4 +41,33 @@ function showCreateRoomModal(callback){
         createRoomModal.modal("hide");
         callback();
     });
+}
+function showHelpModal(){    
+    playSound("alert");
+    
+    helpModal.modal("show");
+}
+function showDisclaimerModal()
+{
+    playSound("alert");
+    disclaimerModal.modal("show");
+    $("#have-read").on('click',()=>{        
+        let haveRead = $("#have-read").prop("checked");
+        if(haveRead)
+        {
+            playSound("button-click");
+            disclaimerModal.modal("hide");
+        }
+    });
+    disclaimerModal.on("hidden.bs.modal",()=>{
+        let haveRead = $("#have-read").prop("checked");
+        if(!haveRead){
+            tata.error('Warning', 'You have to tick "I have read."');
+            disclaimerModal.modal("show");
+        }
+        else
+        {
+            onConnect();
+        }
+    })
 }

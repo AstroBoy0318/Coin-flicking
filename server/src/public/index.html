@@ -5,16 +5,21 @@
     <title>
         MIDAS - Coin Flipping
     </title>
-    <link rel="icon" href="images/logo.png" type="image/x-icon"/>
+    <link rel="icon" href="images/logo.png" type="image/x-icon" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/tata.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <div class="bg-image"></div>
+    <div class="bg-image">
+        <div class="banner-text text-center text-white">
+        </div>
+    </div>
     <div class="container d-none">
         <button class="btn btn-sound"></button>
+        <button class="btn btn-help"></button>
         <button class="btn btn-back"></button>
         <div class="row pt-5 fs-3">
             <div class="col-sm-12 text-center" id="high-score">
@@ -41,7 +46,7 @@
                                                         <th>Reward</th>
                                                     </thead>
                                                     <tbody>
-                                                        
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -55,13 +60,13 @@
                                                         <th>Reward</th>
                                                     </thead>
                                                     <tbody>
-                                                        
+
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-sm-6" id="day-part">
                                         <div class="row">
                                             <div class="col-sm-12 text-center gold-text">
@@ -77,7 +82,7 @@
                                                         <th>Reward</th>
                                                     </thead>
                                                     <tbody>
-                                                        
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -91,7 +96,7 @@
                                                         <th>Reward</th>
                                                     </thead>
                                                     <tbody>
-                                                        
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -157,7 +162,8 @@
                             Me
                         </div>
                         <div class="mb-1 w-75 mx-auto">
-                            <div class="mb-4 text-center avatar-div" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Click to change Avatar.">
+                            <div class="mb-4 text-center avatar-div" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                title="Click to change Avatar.">
 
                             </div>
                             <input class="form-control mb-4 bet-amount" type="number" placeholder="Input your amount"
@@ -173,6 +179,9 @@
                     <div class="card-body">
                         <div class="card-title fs-1 pt-4 pb-2 lh-1">
                         </div>
+                        <div class="card-title fs-3 pt-4 pb-2 px-5 lh-1">
+                            <a href="https://www.Astrohoundz.com">www.Astrohoundz.com</a> Presents
+                        </div>                        
                         <div class="card-text">
                         </div>
                     </div>
@@ -293,11 +302,158 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <input id="room-name-input" class="form-control form-control-lg" type="text" placeholder="Input Room Name">
+                        <input id="room-name-input" class="form-control form-control-lg" type="text"
+                            placeholder="Input Room Name">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary fs-3">Ok</button>
                         <button type="button" class="btn btn-warning fs-3 d-none" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="help-modal" class="modal lh-1" tabindex="-1">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="gold-text fs-2 text-center">The Astrohoundz Project proudly presents MIDAS
+                                </div>
+                                <div class="fs-3">
+                                    <p>
+                                        A modern day take on the classic Coin toss, utilising the same classic principle
+                                        of heads or tails, but created with cutting edge blockchain technology and the
+                                        use of smart contracts to deliver the safest and fairest gambling experience,
+                                        thanks to our peer to peer design.
+                                    </p>
+                                    <p>
+                                        Midas Features Include
+                                    </p>
+                                    <ul class="decimal-list">
+                                        <li>Classic quick fire gambling</li>
+                                        <li>Variable bet size 0.015 to 30 BnB</li>
+                                        <li>Blockchain technology</li>
+                                        <li>Smart contracts</li>
+                                        <li>Custom coded architecture</li>
+                                        <li>Extremely safe</li>
+                                        <li>Slick visuals and audio</li>
+                                        <li>High returns 90-95% for winners</li>
+                                        <li>Duel leaderboard</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="gold-text fs-2 text-center">How to play</div>
+                                <div class="fs-3">
+                                    <ul class="decimal-list">
+                                        <li>Enter your name (This may end up on the daily leaderboard or if you are
+                                            really lucky the All time legends board!</li>
+                                        <li>Connect your wallet containing BnB, the minimum bet is 0.015.</li>
+                                        <li>Select a room to join if players are waiting, or create your own room great
+                                            for competing with friends!
+                                            <br>
+                                            If you create the room!
+                                            <br>
+                                            [we advise you call the room what you would like to bet ie: Call your room
+                                            0.02 BnB to attract similar size betters and so on!]
+                                        </li>
+                                        <li>Select an avatar click on the empty circular section to choose.</li>
+                                        <li>Set a bet if you created the room or match the bet if someone has already
+                                            set one.</li>
+                                        <li>Click Ready and away you go! Good luck!</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary fs-3" data-bs-dismiss="modal">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="disclaimer-modal" class="modal lh-1" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title fs-2"></h5>
+                        <button type="button" class="btn-close d-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12 fs-4">
+                                <p class="fs-2">Disclaimer</p>
+                                <p class="fs-3">
+                                    Accessing this dApp
+                                </p>
+                                <p>
+                                    You provide your consent that The Astrohoundz Project will not be held liable, under
+                                    any circumstances, for any mistakes or lapses, damages and losses, etc., which could
+                                    occur as a consequence of using any content published on this dApp. You also agree
+                                    that you must consider any risks related to any of this content in advance and you
+                                    will be the only one, who is to bear all risks associated with it, including any
+                                    dependence on the correctness, integrity or usefulness of such content.
+                                </p>
+                                <p>
+                                    It is your own obligation to check and verify if online gambling is legal within the
+                                    jurisdiction of your place of residence.
+                                </p>
+                                <p class="fs-3">
+                                    Children
+                                </p>
+                                <p>
+                                    The dApp Midas should not be accessed by persons under the age of 18, or under the
+                                    legal age permitted for entering online gambling websites by the jurisdiction of
+                                    your place of residence.
+                                </p>
+
+                                <p class="fs-3">Disclaimer of Warranties and Liability Limitation</p>
+                                <p>
+                                    The Astrohoundz Project could not be held responsible for any express or implied
+                                    warranties when it comes to its dApp’s operation or the content, data and materials
+                                    published on this dApp.
+                                </p>
+                                <p>
+                                    The Astrohoundz Project hereby disclaims all express or implied warranties to the
+                                    fullest extent permitted by applicable law. The Astrohoundz Project could not also
+                                    be held liable for any damages related to the use or inability to use this dApp. The
+                                    users of this dApp unambiguously agree that they are to use this dApp only at their
+                                    own risk.
+                                </p>
+                                <p class="fs-3">Changing the Terms and Conditions</p>
+
+                                <p>
+                                    The Astrohoundz Project has the exclusive rights to change and modify, at its sole
+                                    discretion, the Terms and Conditions under which its services are provided. The
+                                    users of this dApp bear the responsibility to check these Terms regularly for any
+                                    eventual changes and additions. If you continue using our services in such cases,
+                                    you give your agreement to all changes implemented in our Terms and Conditions.
+                                </p>
+                                <p class="fs-3">Security</p>
+
+                                <p>
+                                    We are committed to ensuring that your information is secure. In order to prevent
+                                    unauthorised access or disclosure, we have put in place suitable procedures to
+                                    safeguard your data.
+                                    In borders with I have read tick box etc thanks
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="have-read">
+                            <label class="form-check-label fs-3" for="have-read">
+                                I have read.
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -340,6 +496,10 @@
         <audio id="alert" src="sound/alert-sound.wav"></audio>
         <audio id="back-music" src="sound/back-music.mp3" loop></audio>
     </div>
+
+    <div class="music-credit text-white fs-4">
+        Music credit: <a href="https://www.bensound.com/royalty-free-music">bensound.com</a>
+    </div>
 </body>
 <script src="/socket.io/socket.io.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -350,7 +510,9 @@
 <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
 <script type="text/javascript" src="js/web3modal.js"></script>
 <script type="text/javascript" src="https://unpkg.com/evm-chains@0.2.0/dist/umd/index.min.js"></script>
-<script type="text/javascript" src="https://unpkg.com/@walletconnect/web3-provider@1.2.1/dist/umd/index.min.js"></script>
+<script type="text/javascript"
+    src="https://unpkg.com/@walletconnect/web3-provider@1.2.1/dist/umd/index.min.js"></script>
+<script type="text/javascript" src="js/tata.js"></script>
 <script src="js/config.js"></script>
 <script src="js/utils.js"></script>
 <script src="js/modals.js"></script>

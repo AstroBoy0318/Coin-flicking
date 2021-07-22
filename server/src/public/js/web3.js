@@ -27,7 +27,7 @@ function initWeb3() {
         if (!toPay)
             return;
         init();
-        onConnect();
+        // onConnect();
     });
 }
 

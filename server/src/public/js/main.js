@@ -16,6 +16,15 @@ $(function () {
     {
         playBackMusic();
     }
+    $(".btn-back").hide();
+    screens.forEach((el, idx) => {
+        if (idx > 0)
+            $("#" + el).hide();
+    });
+    $("#go-text").hide();
+    $("#high-score").hide();
+    $("#go-text").removeClass("d-none");
+    //add listeners
     $(".btn-sound").on('click',()=>{
         toggleMute();
         if($(".btn-sound").hasClass("btn-mute"))
@@ -29,16 +38,9 @@ $(function () {
             pauseBackMusic();
         }
     });
-
-    $(".btn-back").hide();
-    screens.forEach((el, idx) => {
-        if (idx > 0)
-            $("#" + el).hide();
+    $(".btn-help").on('click',()=>{
+        showHelpModal();
     });
-    $("#go-text").hide();
-    $("#high-score").hide();
-    $("#go-text").removeClass("d-none");
-    //add listeners
     $(".btn-list").on('click',()=>{
         showTopListModal();
     });
@@ -58,6 +60,7 @@ $(function () {
     });
     $(".container").removeClass("d-none");    
     initWeb3();
+    showDisclaimerModal();
 });
 
 function createSocket()
@@ -306,7 +309,7 @@ function exitRoom() {
 
 function setPlayerStatus(room) {
     myRoom = room;
-    $("#play-side .card-title").html("Room " + room.number + "<br>" + room.name);
+    $("#play-side .card-title").eq(0).html("Room " + room.number + "<br>" + room.name);
     if (room.playerIDA == socket.id) {
         setMyStatus(room.readyA, room.playerB);
         setOtherStatus(room.playerB, room.sideB, room.betB, room.readyB);
