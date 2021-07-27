@@ -54,9 +54,24 @@ function insertRow(name, avatar, bet, reward) {
         [name, avatar, bet, reward]
     );
 }
+function getTotalBnb(res)
+{
+    pool.query(
+        `SELECT sum(bet) as totalbnb FROM coinflip_history`, (err, rows)=>{
+            let data = emptyOrRows(rows);
+            let totalbnb = 0;
+            if(data.length > 0)
+            {
+                totalbnb = data[0].totalbnb;
+            }
+            res.send('<b>'+totalbnb+'</b>');
+        }
+    );
+}
 
 module.exports = {
     getTopList,
     getHighScore,
-    insertRow
+    insertRow,
+    getTotalBnb
 }

@@ -2,7 +2,7 @@ let http = require('http');
 let express = require('express');
 let Web3 = require('web3');
 let Room = require('./room.js');
-const { getTopList, insertRow } = require('./db.js');
+const { getTopList, insertRow,getTotalBnb } = require('./db.js');
 const dateFormat = require('dateformat');
 const { getWinnerRate } = require('./util.js');
 
@@ -249,6 +249,9 @@ app.get('/getAvailableRooms', (req, res) => {
 app.post('/getTopList', async (req, res) => {
     let now = dateFormat(new Date(), "yyyy-mm-dd");
     getTopList(req.body.type, now, req.body.limit, res);
+});
+app.get('/getTotalBNB', (req, res) => {
+    getTotalBnb(res);
 });
 
 app.use(express.static(publicPath));

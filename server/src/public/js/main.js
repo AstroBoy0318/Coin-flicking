@@ -4,18 +4,6 @@ let rooms = [];
 let myRoom;
 let myAvatar = 0, myAmount = 0, otherAvatar = 0;
 $(function () {
-    setBackMusicVolume(0.08);
-    //mute button
-    let mute = getMute();
-    if(mute)
-    {
-        $(".btn-sound").addClass("btn-mute");
-        pauseBackMusic();
-    }
-    else
-    {
-        playBackMusic();
-    }
     $(".btn-back").hide();
     screens.forEach((el, idx) => {
         if (idx > 0)
@@ -136,9 +124,10 @@ function createSocket()
 }
 
 function joinGame() {
-    if(!web3Valid())
+    let checkWeb3 = web3Valid();
+    if(checkWeb3 !== true)
     {
-        showReloadModal("Please connect your wallet.");
+        showReloadModal(checkWeb3);
         return;
     }
 

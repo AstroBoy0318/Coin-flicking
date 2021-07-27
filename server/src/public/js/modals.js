@@ -49,12 +49,24 @@ function showHelpModal(){
 }
 function showDisclaimerModal()
 {
-    playSound("alert");
     disclaimerModal.modal("show");
     $("#have-read").on('click',()=>{        
         let haveRead = $("#have-read").prop("checked");
         if(haveRead)
-        {
+        {            
+            setBackMusicVolume(0.08);
+            //get mute state
+            let mute = getMute();
+            if(mute)
+            {
+                $(".btn-sound").addClass("btn-mute");
+                pauseBackMusic();
+            }
+            else
+            {
+                playBackMusic();
+            }
+
             playSound("button-click");
             disclaimerModal.modal("hide");
         }

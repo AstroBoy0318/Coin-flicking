@@ -93,15 +93,22 @@ async function fetchAccountData() {
     accountInfo['address'] = accounts[0];
     accountInfo['chainId'] = await web3.eth.getChainId();
 }
-function web3Valid()
-{
-    return !toPay || (accountInfo['address'] && accountInfo['chainId'] == chainID);
+function web3Valid() {
+    if (toPay && !(accountInfo['address'] && accountInfo['chainId'] == chainID)) {
+        if (accountInfo['chainId'] != chainID)
+            return 'Select ' + networks[chainID] + ' network';
+        if (!accountInfo['address'])
+            return 'Connect to your wallet';
+    }
+    else {
+        return true;
+    }
 }
 async function ready(number, player, playerID, amount) {
     let account = await web3.eth.getAccounts();
     let curChainId = await web3.eth.getChainId();
     if (curChainId != chainID) {
-        alert("Select correct network");
+        showAlertModal("Select correct network");
         return;
     }
     amount = Web3.utils.toWei(amount.toString(), 'ether');

@@ -769,3 +769,11 @@ body .container{
 .tata-body{
     font-family: sans-serif;
 }
+
+#disclaimer-modal .modal-body{
+    max-height: 100vw;
+    overflow: auto;
+}
+#disclaimer-modal .modal-dialog-scrollable{
+    max-height: 100vw;
+}
