@@ -6,7 +6,7 @@ const { getTopList, insertRow,getTotalBnb } = require('./db.js');
 const dateFormat = require('dateformat');
 const { getWinnerRate } = require('./util.js');
 
-const port = 8080;
+const port = 80;
 const toPay = true;
 let rooms = [];
 let nextRoomNumber = 1;
